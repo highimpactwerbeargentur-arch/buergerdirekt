@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BürgerDirekt – Kein Bürgeranruf geht mehr verloren</title>
+    <meta name="description" content="BürgerDirekt erfasst Bürgeranliegen automatisch per SMS-Formular – strukturiert, nachvollziehbar, DSGVO-konform. Für Kommunen, Gemeinden und Städte.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://www.leadcall24.de/Leadcall24.png">
+    <link rel="apple-touch-icon" href="https://www.leadcall24.de/Leadcall24.png">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="BürgerDirekt – Kein Bürgeranruf geht mehr verloren">
+    <meta property="og:description" content="Automatisierte Anrufannahme und Anliegenerfassung per SMS-Formular für Kommunen, Gemeinden und Städte. DSGVO-konform, ohne Installation.">
+    <meta property="og:image" content="https://www.leadcall24.de/Leadcall24.png">
+    <meta property="og:url" content="https://www.buergerdirekt.de">
+    <meta property="og:locale" content="de_DE">
+    <meta property="og:site_name" content="BürgerDirekt">
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "LeadCall24",
+        "url": "https://www.leadcall24.de",
+        "logo": "https://www.leadcall24.de/Leadcall24.png",
+        "description": "Digitaler Assistent für Handwerksbetriebe – Automatisiertes Anrufmanagement und Lead-Erfassung",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+49-163-1692010",
+            "contactType": "sales",
+            "availableLanguage": "German"
+        },
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Unter den Linden 9",
+            "addressLocality": "Werder (Havel)",
+            "postalCode": "14542",
+            "addressCountry": "DE"
+        }
+    }
+    </script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --blue-900: #1a365d;
+            --blue-800: #1e3a5f;
+            --blue-700: #2c5282;
+            --blue-600: #2b6cb0;
+            --blue-500: #3182ce;
+            --blue-100: #ebf8ff;
+            --blue-50: #f0f7ff;
+            --gray-50: #f7fafc;
+            --gray-100: #edf2f7;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e0;
+            --gray-400: #a0aec0;
+            --gray-500: #718096;
+            --gray-600: #4a5568;
+            --gray-700: #2d3748;
+            --gray-800: #1a202c;
+            --white: #ffffff;
+            --red-50: #fff5f5;
+            --red-500: #e53e3e;
+            --green-500: #38a169;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--gray-800);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--gray-200);
+            z-index: 100;
+            transition: box-shadow 0.2s;
+        }
+        nav.scrolled {
+            box-shadow: 0 1px 12px rgba(0,0,0,0.06);
+        }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+        .nav-logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--blue-900);
+            text-decoration: none;
+            letter-spacing: -0.025em;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+        .nav-links a:hover { color: var(--blue-900); }
+        .nav-cta-link {
+            background: var(--blue-900);
+            color: var(--white) !important;
+            padding: 9px 22px;
+            border-radius: 6px;
+            font-size: 0.85rem !important;
+            transition: background 0.15s;
+        }
+        .nav-cta-link:hover { background: var(--blue-700); }
+        .nav-hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            color: var(--gray-700);
+        }
+
+        /* ── SECTION DEFAULTS ── */
+        section { padding: 88px 0; }
+        .section-alt { background: var(--gray-50); }
+        .section-label {
+            font-size: 0.775rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--blue-600);
+            margin-bottom: 10px;
+        }
+        .section-title {
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: var(--blue-900);
+            margin-bottom: 14px;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+        .section-subtitle {
+            font-size: 1.05rem;
+            color: var(--gray-500);
+            max-width: 620px;
+            line-height: 1.65;
+            margin-bottom: 48px;
+        }
+        .centered { text-align: center; }
+        .centered .section-subtitle { margin-left: auto; margin-right: auto; }
+
+        /* ── HERO ── */
+        .hero {
+            padding: 144px 0 88px;
+            background: linear-gradient(168deg, #0f2744 0%, var(--blue-900) 40%, var(--blue-800) 100%);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero-content {
+            max-width: 680px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero h1 {
+            font-size: 2.85rem;
+            font-weight: 800;
+            line-height: 1.12;
+            margin-bottom: 20px;
+            letter-spacing: -0.03em;
+        }
+        .hero-sub {
+            font-size: 1.125rem;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.7;
+            margin-bottom: 36px;
+            max-width: 580px;
+        }
+        .btn-primary {
+            display: inline-block;
+            background: var(--white);
+            color: var(--blue-900);
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 0.975rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.15s, box-shadow 0.15s;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        .hero-trust {
+            margin-top: 48px;
+            padding-top: 28px;
+            border-top: 1px solid rgba(255,255,255,0.12);
+            display: flex;
+            gap: 36px;
+            flex-wrap: wrap;
+        }
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            font-weight: 500;
+        }
+        .trust-item svg { flex-shrink: 0; opacity: 0.7; }
+
+        /* ── PROBLEMS ── */
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+        .problem-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 32px 28px;
+            transition: box-shadow 0.2s;
+        }
+        .problem-card:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .problem-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--red-50);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .problem-card h3 {
+            font-size: 1.075rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 10px;
+        }
+        .problem-card p {
+            font-size: 0.925rem;
+            color: var(--gray-500);
+            line-height: 1.65;
+        }
+
+        /* ── STEPS ── */
+        .steps-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .step {
+            display: flex;
+            gap: 24px;
+        }
+        .step-rail {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .step-dot {
+            width: 42px;
+            height: 42px;
+            background: var(--blue-900);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .step-line {
+            width: 2px;
+            flex: 1;
+            background: var(--gray-200);
+            margin: 6px 0;
+            min-height: 20px;
+        }
+        .step:last-child .step-line { display: none; }
+        .step-body {
+            padding-bottom: 36px;
+            padding-top: 8px;
+        }
+        .step:last-child .step-body { padding-bottom: 0; }
+        .step-body h3 {
+            font-size: 1.025rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 5px;
+        }
+        .step-body p {
+            font-size: 0.925rem;
+            color: var(--gray-500);
+            line-height: 1.65;
+        }
+
+        /* ── DEPARTMENTS ── */
+        .dept-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .dept-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 28px 24px;
+            transition: box-shadow 0.2s;
+        }
+        .dept-card:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .dept-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--blue-50);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        .dept-icon svg { color: var(--blue-700); }
+        .dept-card h3 {
+            font-size: 0.975rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 10px;
+        }
+        .dept-card ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .dept-card li {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            padding-left: 18px;
+            position: relative;
+        }
+        .dept-card li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gray-300);
+        }
+
+        /* ── BENEFITS ── */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .benefit-card {
+            display: flex;
+            gap: 16px;
+            padding: 24px;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            transition: box-shadow 0.2s;
+        }
+        .benefit-card:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .benefit-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--blue-50);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .benefit-icon svg { color: var(--blue-700); }
+        .benefit-card h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 4px;
+        }
+        .benefit-card p {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            line-height: 1.6;
+        }
+
+        /* ── DASHBOARD ── */
+        .dashboard-mock {
+            background: var(--gray-100);
+            border: 2px dashed var(--gray-300);
+            border-radius: 14px;
+            padding: 80px 40px;
+            text-align: center;
+            max-width: 780px;
+            margin: 0 auto;
+        }
+        .dashboard-mock svg { margin-bottom: 16px; color: var(--gray-400); }
+        .dashboard-mock p {
+            color: var(--gray-400);
+            font-size: 0.925rem;
+            font-weight: 500;
+        }
+        .dashboard-caption {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        /* ── FAQ ── */
+        .faq-list {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .faq-q {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 20px 0;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.975rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            font-family: inherit;
+            line-height: 1.4;
+            transition: color 0.15s;
+        }
+        .faq-q:hover { color: var(--blue-700); }
+        .faq-chevron {
+            flex-shrink: 0;
+            transition: transform 0.2s;
+            color: var(--gray-400);
+        }
+        .faq-item.open .faq-chevron { transform: rotate(180deg); }
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-a-inner {
+            padding: 0 0 20px;
+            font-size: 0.925rem;
+            color: var(--gray-500);
+            line-height: 1.7;
+        }
+
+        /* ── CONTACT ── */
+        .contact-section {
+            background: linear-gradient(168deg, #0f2744 0%, var(--blue-900) 100%);
+            color: var(--white);
+        }
+        .contact-section .section-title { color: var(--white); }
+        .contact-section .section-subtitle { color: rgba(255,255,255,0.65); }
+        .contact-section .section-label { color: rgba(255,255,255,0.4); }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
+            align-items: start;
+        }
+        .contact-text h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .contact-text p {
+            color: rgba(255,255,255,0.65);
+            font-size: 0.925rem;
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+        .phone-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+            padding: 12px 24px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            transition: background 0.15s, border-color 0.15s;
+        }
+        .phone-link:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.35);
+        }
+
+        .contact-form {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 36px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .form-group { margin-bottom: 14px; }
+        .form-group.span-full { grid-column: 1 / -1; }
+        .form-group label {
+            display: block;
+            font-size: 0.825rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 5px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--gray-300);
+            border-radius: 7px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            color: var(--gray-800);
+            background: var(--white);
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--blue-500);
+            box-shadow: 0 0 0 3px rgba(49,130,206,0.1);
+        }
+        .form-group textarea { resize: vertical; min-height: 80px; }
+        .form-submit {
+            width: 100%;
+            padding: 13px 24px;
+            background: var(--blue-900);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.15s;
+            margin-top: 4px;
+        }
+        .form-submit:hover { background: var(--blue-700); }
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 48px 24px;
+        }
+        .form-success svg { margin-bottom: 16px; }
+        .form-success h3 {
+            color: var(--gray-800);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        .form-success p {
+            color: var(--gray-500);
+            font-size: 0.925rem;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--gray-800);
+            color: var(--gray-400);
+            padding: 40px 0;
+            font-size: 0.85rem;
+        }
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .footer-brand {
+            color: var(--gray-200);
+            font-weight: 600;
+        }
+        .footer-brand span {
+            display: block;
+            font-weight: 400;
+            color: var(--gray-500);
+            font-size: 0.8rem;
+            margin-top: 2px;
+        }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a {
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .footer-links a:hover { color: var(--gray-200); }
+        .footer-bottom {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-700);
+            text-align: center;
+            color: var(--gray-500);
+            font-size: 0.8rem;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            section { padding: 60px 0; }
+            .hero { padding: 116px 0 60px; }
+            .hero h1 { font-size: 2.1rem; }
+            .hero-sub { font-size: 1rem; }
+            .section-title { font-size: 1.65rem; }
+            .problems-grid,
+            .dept-grid { grid-template-columns: 1fr; }
+            .benefits-grid { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; gap: 36px; }
+            .form-row { grid-template-columns: 1fr; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                background: rgba(255,255,255,0.98);
+                backdrop-filter: blur(8px);
+                padding: 16px 24px 24px;
+                border-bottom: 1px solid var(--gray-200);
+                box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            }
+            .nav-links.open { display: flex; }
+            .nav-hamburger { display: block; }
+            .hero-trust { flex-direction: column; gap: 10px; }
+            .footer-top { flex-direction: column; text-align: center; }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .problems-grid { grid-template-columns: 1fr 1fr; }
+            .dept-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+    <div class="container nav-inner">
+        <a href="#" class="nav-logo">BürgerDirekt</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#problem">Herausforderung</a></li>
+            <li><a href="#ablauf">Ablauf</a></li>
+            <li><a href="#vorteile">Vorteile</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#kontakt" class="nav-cta-link">Beratung anfragen</a></li>
+        </ul>
+        <button class="nav-hamburger" id="hamburger" aria-label="Menü öffnen">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+        </button>
+    </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Kein Bürgeranruf geht mehr verloren.</h1>
+            <p class="hero-sub">BürgerDirekt nimmt Anrufe außerhalb der Sprechzeiten entgegen und erfasst Bürgeranliegen automatisch per SMS-Formular – strukturiert, nachvollziehbar, ohne zusätzliches Personal.</p>
+            <a href="#kontakt" class="btn-primary">Kostenlose Beratung für Ihre Kommune</a>
+            <div class="hero-trust">
+                <div class="trust-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    DSGVO-konform
+                </div>
+                <div class="trust-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                    Deutsche Server
+                </div>
+                <div class="trust-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Keine Installation nötig
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── PROBLEM ── -->
+<section id="problem" class="section-alt">
+    <div class="container">
+        <div class="section-label">Das Problem</div>
+        <h2 class="section-title">Kennen Sie das?</h2>
+        <p class="section-subtitle">Kommunalverwaltungen stehen vor denselben Problemen – unabhängig von ihrer Größe.</p>
+        <div class="problems-grid">
+            <div class="problem-card">
+                <div class="problem-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/><line x1="4" y1="2" x2="20" y2="22" stroke="#e53e3e" stroke-width="2"/></svg>
+                </div>
+                <h3>Anrufe gehen ins Leere</h3>
+                <p>Außerhalb der Sprechzeiten, in der Mittagspause, bei Krankenstand: Bürger erreichen niemanden. Frust, Beschwerden, Leserbriefe.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <h3>Routinefragen binden Personal</h3>
+                <p>Öffnungszeiten, Terminbuchung, welche Dokumente mitbringen. Immer die gleichen Fragen, jeden Tag. Ihre Mitarbeiter kommen nicht zur eigentlichen Arbeit.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                </div>
+                <h3>Anliegen verschwinden</h3>
+                <p>Mündliche Weitergabe, Notizzettel, vergessene Rückrufe. Nach drei Wochen fragt der Bürger: „Was ist mit meinem Schlagloch?"</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section id="ablauf">
+    <div class="container centered">
+        <div class="section-label">Der Ablauf</div>
+        <h2 class="section-title">So funktioniert BürgerDirekt</h2>
+        <p class="section-subtitle">Vom verpassten Anruf bis zur erledigten Meldung – in wenigen Schritten.</p>
+    </div>
+    <div class="container">
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-rail">
+                    <div class="step-dot">1</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="step-body">
+                    <h3>Anruf geht ein</h3>
+                    <p>Ein Bürger ruft an, niemand ist erreichbar – oder ein Mitarbeiter leitet den Anruf gezielt weiter.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-rail">
+                    <div class="step-dot">2</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="step-body">
+                    <h3>Automatische Ansage</h3>
+                    <p>Eine professionelle Bandansage informiert den Bürger: Sein Anliegen wird aufgenommen, er erhält gleich eine SMS.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-rail">
+                    <div class="step-dot">3</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="step-body">
+                    <h3>SMS mit Formular-Link</h3>
+                    <p>Der Bürger bekommt eine SMS mit einem Link zum Anliegen-Formular. Direkt auf dem Handy, kein App-Download nötig.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-rail">
+                    <div class="step-dot">4</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="step-body">
+                    <h3>Bürger beschreibt sein Anliegen</h3>
+                    <p>Kategorie wählen (Straßenschaden, Grünfläche, Ordnung...), Beschreibung eingeben, Foto hochladen, Ort angeben.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-rail">
+                    <div class="step-dot">5</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="step-body">
+                    <h3>Anliegen im Dashboard</h3>
+                    <p>Das Anliegen erscheint sofort im Dashboard der zuständigen Abteilung. Sortiert, priorisiert, nachverfolgbar.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-rail">
+                    <div class="step-dot">6</div>
+                    <div class="step-line"></div>
+                </div>
+                <div class="step-body">
+                    <h3>Bearbeitung und Rückmeldung</h3>
+                    <p>Die Abteilung bearbeitet das Anliegen. Der Bürger kann jederzeit den Status abfragen.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── DEPARTMENTS ── -->
+<section id="abteilungen" class="section-alt">
+    <div class="container centered">
+        <div class="section-label">Einsatzbereiche</div>
+        <h2 class="section-title">Ein System für alle Abteilungen</h2>
+        <p class="section-subtitle">Jede Abteilung erhält nur die Anliegen, die sie betreffen – in ihrem eigenen Dashboard.</p>
+    </div>
+    <div class="container">
+        <div class="dept-grid">
+            <div class="dept-card">
+                <div class="dept-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 21h18"/><path d="M5 21V7l8-4 8 4v14"/><path d="M9 21v-6h6v6"/></svg>
+                </div>
+                <h3>Tiefbau &amp; Straßen</h3>
+                <ul>
+                    <li>Schlaglöcher</li>
+                    <li>Defekte Laternen</li>
+                    <li>Gehwegschäden</li>
+                </ul>
+            </div>
+            <div class="dept-card">
+                <div class="dept-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22c-4 0-8-2-8-6V8c0-4 4-6 8-6s8 2 8 6v8c0 4-4 6-8 6z"/><path d="M12 2v20"/><path d="M4 8c2 1 5 2 8 2s6-1 8-2"/></svg>
+                </div>
+                <h3>Grünflächen</h3>
+                <ul>
+                    <li>Baumschäden</li>
+                    <li>Spielplätze</li>
+                    <li>Grünschnitt</li>
+                </ul>
+            </div>
+            <div class="dept-card">
+                <div class="dept-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h3>Ordnungsamt</h3>
+                <ul>
+                    <li>Ruhestörung</li>
+                    <li>Falschparker</li>
+                    <li>Wilde Müllentsorgung</li>
+                </ul>
+            </div>
+            <div class="dept-card">
+                <div class="dept-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                </div>
+                <h3>Bürgeramt</h3>
+                <ul>
+                    <li>Terminbuchung</li>
+                    <li>Öffnungszeiten</li>
+                    <li>Dokumentenlisten</li>
+                </ul>
+            </div>
+            <div class="dept-card">
+                <div class="dept-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                </div>
+                <h3>Abfallwirtschaft</h3>
+                <ul>
+                    <li>Tonnenbestellung</li>
+                    <li>Sperrmüll</li>
+                    <li>Containerprobleme</li>
+                </ul>
+            </div>
+            <div class="dept-card">
+                <div class="dept-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                </div>
+                <h3>Stadtwerke</h3>
+                <ul>
+                    <li>Rohrbrüche</li>
+                    <li>Störungen</li>
+                    <li>Zählerstand</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── BENEFITS ── -->
+<section id="vorteile">
+    <div class="container centered">
+        <div class="section-label">Ihre Vorteile</div>
+        <h2 class="section-title">Was Ihre Kommune davon hat</h2>
+        <p class="section-subtitle">Praktischer Nutzen, kein Marketingversprechen.</p>
+    </div>
+    <div class="container">
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div>
+                    <h3>24/7 Erreichbarkeit</h3>
+                    <p>Anrufe werden auch nachts, am Wochenende und bei Krankenstand erfasst.</p>
+                </div>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                </div>
+                <div>
+                    <h3>Mitarbeiter-Entlastung</h3>
+                    <p>Weniger Routineanrufe, mehr Zeit für Beratung und Sachbearbeitung.</p>
+                </div>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="16 13 12 17 8 13"/></svg>
+                </div>
+                <div>
+                    <h3>Nichts geht verloren</h3>
+                    <p>Jedes Anliegen wird digital erfasst, dokumentiert und ist nachverfolgbar.</p>
+                </div>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                </div>
+                <div>
+                    <h3>Bürger fühlen sich gehört</h3>
+                    <p>Sofortige Bestätigung per SMS, transparenter Status.</p>
+                </div>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                    <h3>Kein IT-Projekt</h3>
+                    <p>Keine Server, keine Software-Installation, keine Schulung. Läuft innerhalb von 2 Wochen.</p>
+                </div>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72"/></svg>
+                </div>
+                <div>
+                    <h3>Barrierefreiheit</h3>
+                    <p>Funktioniert per Telefon und SMS – auch für Menschen ohne App oder Internet-Zugang.</p>
+                </div>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div>
+                    <h3>DSGVO-konform</h3>
+                    <p>Alle Daten auf europäischen Servern, Auftragsverarbeitungsvertrag inklusive.</p>
+                </div>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                </div>
+                <div>
+                    <h3>Günstiger als Personal</h3>
+                    <p>Bruchteil der Kosten einer halben Stelle.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── DASHBOARD ── -->
+<section class="section-alt">
+    <div class="container centered">
+        <div class="section-label">Einblick</div>
+        <h2 class="section-title">Das BürgerDirekt Dashboard</h2>
+        <p class="section-subtitle">Alle Anliegen auf einen Blick – sortiert nach Abteilung und Dringlichkeit.</p>
+        <div class="dashboard-mock">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <p>Screenshot folgt</p>
+        </div>
+        <p class="dashboard-caption">Jede Abteilung sieht nur ihre Anliegen – sortiert nach Dringlichkeit, mit Status-Tracking.</p>
+    </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section id="faq">
+    <div class="container centered">
+        <div class="section-label">Häufige Fragen</div>
+        <h2 class="section-title">FAQ</h2>
+        <p class="section-subtitle">Antworten auf die häufigsten Fragen von Kommunalverantwortlichen.</p>
+    </div>
+    <div class="container">
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-q">
+                    Wie funktioniert BürgerDirekt genau?
+                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">Bei einem verpassten Anruf wird automatisch eine SMS mit einem Formular-Link versendet. Der Bürger beschreibt sein Anliegen digital – mit Text, Foto und Kategorie. Das Anliegen erscheint sofort im Dashboard der zuständigen Abteilung.</div></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q">
+                    Brauchen wir neue Telefonnummern?
+                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">Nein. BürgerDirekt wird als Weiterleitung hinter Ihre bestehende Nummer geschaltet. Für Bürger ändert sich nichts.</div></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q">
+                    Wie schnell ist das einsatzbereit?
+                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">Innerhalb von 2 Wochen. Keine Installation, keine Hardware, keine IT-Abteilung nötig.</div></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q">
+                    Ist das DSGVO-konform?
+                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">Ja. Alle Daten werden auf europäischen Servern verarbeitet und gespeichert. Ein Auftragsverarbeitungsvertrag (AVV) ist selbstverständlich inklusive.</div></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q">
+                    Was kostet BürgerDirekt?
+                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">Die Kosten richten sich nach Einwohnerzahl und Umfang. Kontaktieren Sie uns für ein individuelles Angebot – die Erstberatung ist kostenlos.</div></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q">
+                    Funktioniert das auch für kleine Gemeinden?
+                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">Ja. BürgerDirekt skaliert von der kleinen Gemeinde bis zur Großstadt. Gerade kleine Verwaltungen mit wenig Personal profitieren besonders.</div></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-q">
+                    Was ist mit älteren Bürgern ohne Smartphone?
+                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-a"><div class="faq-a-inner">Die Bandansage informiert auch ohne SMS über den weiteren Ablauf. Zusätzlich können Mitarbeiter Anliegen jederzeit manuell ins Dashboard eintragen.</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="kontakt" class="contact-section">
+    <div class="container">
+        <div class="section-label">Kontakt</div>
+        <h2 class="section-title">Lassen Sie sich unverbindlich beraten</h2>
+        <p class="section-subtitle">Wir zeigen Ihnen in 30 Minuten, wie BürgerDirekt in Ihrer Kommune funktionieren kann.</p>
+        <div class="contact-grid">
+            <div class="contact-text">
+                <h3>Persönliche Beratung</h3>
+                <p>Wir kennen die Herausforderungen kommunaler Verwaltungen. In einem kurzen Gespräch klären wir, ob und wie BürgerDirekt in Ihrer Kommune eingesetzt werden kann – unverbindlich und kostenlos.</p>
+                <a href="tel:+491631692010" class="phone-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+                    0163 1692010
+                </a>
+            </div>
+            <div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="anrede">Anrede</label>
+                            <select id="anrede" name="anrede" required>
+                                <option value="">Bitte wählen</option>
+                                <option value="Herr">Herr</option>
+                                <option value="Frau">Frau</option>
+                                <option value="Divers">Divers</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="Max Mustermann" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="kommune">Kommune / Stadt</label>
+                            <input type="text" id="kommune" name="kommune" placeholder="Stadt Musterstadt" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="position">Position</label>
+                            <input type="text" id="position" name="position" placeholder="z.B. Bürgermeister">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">E-Mail</label>
+                            <input type="email" id="email" name="email" placeholder="max@musterstadt.de" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefon">Telefon</label>
+                            <input type="tel" id="telefon" name="telefon" placeholder="+49 ...">
+                        </div>
+                    </div>
+                    <div class="form-group span-full">
+                        <label for="nachricht">Nachricht (optional)</label>
+                        <textarea id="nachricht" name="nachricht" placeholder="Erzählen Sie uns kurz von Ihrer Kommune ..."></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">Beratungstermin vereinbaren</button>
+                </form>
+                <div class="form-success" id="formSuccess">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#38a169" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 10"/></svg>
+                    <h3>Vielen Dank für Ihre Anfrage</h3>
+                    <p>Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+    <div class="container">
+        <div class="footer-top">
+            <div class="footer-brand">
+                BürgerDirekt
+                <span>Ein Produkt von LeadCall24</span>
+            </div>
+            <div class="footer-links">
+                <a href="impressum.html">Impressum</a>
+                <a href="datenschutz.html">Datenschutz</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            Tristan Haupt · Unter den Linden 9 · 14542 Werder (Havel)
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Nav shadow on scroll
+    window.addEventListener('scroll', function() {
+        document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    // Mobile menu toggle
+    document.getElementById('hamburger').addEventListener('click', function() {
+        document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.nav-links a').forEach(function(a) {
+        a.addEventListener('click', function() {
+            document.getElementById('navLinks').classList.remove('open');
+        });
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var item = this.parentElement;
+            var answer = item.querySelector('.faq-a');
+            var wasOpen = item.classList.contains('open');
+
+            // Close all items
+            document.querySelectorAll('.faq-item').forEach(function(el) {
+                el.classList.remove('open');
+                el.querySelector('.faq-a').style.maxHeight = null;
+            });
+
+            // Toggle clicked item
+            if (!wasOpen) {
+                item.classList.add('open');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
+        });
+    });
+
+    // Contact form (client-side only for now)
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        var data = {
+            anrede: this.anrede.value,
+            name: this.name.value,
+            kommune: this.kommune.value,
+            position: this.position.value,
+            email: this.email.value,
+            telefon: this.telefon.value,
+            nachricht: this.nachricht.value,
+            timestamp: new Date().toISOString()
+        };
+
+        console.log('BürgerDirekt Lead:', data);
+
+        this.style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+    });
+</script>
+
+</body>
+</html>
