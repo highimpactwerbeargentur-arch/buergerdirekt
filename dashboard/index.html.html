@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BürgerDirekt – Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0B1D35;
+            --navy-light: #132B4D;
+            --navy-hover: #1a3a66;
+            --blue: #1B4B8A;
+            --blue-accent: #2E7DD1;
+            --sky: #E8F1FA;
+            --sky-light: #F4F8FC;
+            --white: #FFFFFF;
+            --gray-50: #FAFAFA;
+            --gray-100: #F5F5F5;
+            --gray-200: #E8E8E8;
+            --gray-300: #D1D1D1;
+            --gray-400: #9E9E9E;
+            --gray-500: #6B6B6B;
+            --gray-600: #4A4A4A;
+            --gray-700: #2D2D2D;
+            --green: #1A7A4C;
+            --green-light: #E8F5EE;
+            --orange: #C47A2B;
+            --orange-light: #FFF3E0;
+            --red: #C0392B;
+            --red-light: #FFF0F0;
+            --purple: #6C3FA0;
+            --purple-light: #F3EEFA;
+            --font-display: 'DM Serif Display', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, sans-serif;
+            --sidebar-width: 260px;
+            --topbar-height: 64px;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: var(--font-body); color: var(--gray-700); background: var(--gray-50); font-size: 14px; -webkit-font-smoothing: antialiased; }
+
+        /* === LOGIN === */
+        .login-wrap {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            padding: 20px;
+        }
+        .login-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.3);
+        }
+        .login-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 32px;
+            justify-content: center;
+        }
+        .login-logo-icon {
+            width: 40px; height: 40px;
+            background: var(--navy);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .login-logo-icon svg { width: 22px; height: 22px; }
+        .login-logo-text { font-family: var(--font-display); font-size: 24px; color: var(--navy); }
+        .login-title { text-align: center; font-size: 15px; color: var(--gray-500); margin-bottom: 32px; }
+        .login-group { margin-bottom: 16px; }
+        .login-group label { display: block; font-size: 13px; font-weight: 600; color: var(--gray-600); margin-bottom: 6px; }
+        .login-group input {
+            width: 100%; padding: 12px 16px; border: 1px solid var(--gray-200); border-radius: 8px;
+            font-family: var(--font-body); font-size: 15px; outline: none; transition: border-color 0.2s;
+        }
+        .login-group input:focus { border-color: var(--blue-accent); }
+        .login-btn {
+            width: 100%; padding: 14px; background: var(--navy); color: var(--white);
+            border: none; border-radius: 10px; font-family: var(--font-body);
+            font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-top: 8px;
+        }
+        .login-btn:hover { background: var(--blue); }
+        .login-error { color: var(--red); font-size: 13px; margin-top: 12px; text-align: center; display: none; }
+
+        /* === DASHBOARD LAYOUT === */
+        .app { display: none; min-height: 100vh; }
+        .sidebar {
+            position: fixed; top: 0; left: 0; bottom: 0;
+            width: var(--sidebar-width); background: var(--navy);
+            padding: 24px 0; overflow-y: auto; z-index: 100;
+            display: flex; flex-direction: column;
+        }
+        .sidebar-logo {
+            display: flex; align-items: center; gap: 10px;
+            padding: 0 24px; margin-bottom: 36px;
+        }
+        .sidebar-logo-icon {
+            width: 34px; height: 34px; background: rgba(255,255,255,0.1);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+        }
+        .sidebar-logo-icon svg { width: 18px; height: 18px; }
+        .sidebar-logo-text { font-family: var(--font-display); font-size: 18px; color: var(--white); }
+        .sidebar-section { padding: 0 16px; margin-bottom: 8px; }
+        .sidebar-section-title {
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1.2px; color: rgba(255,255,255,0.35); padding: 0 8px; margin-bottom: 8px;
+        }
+        .sidebar-link {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 12px; border-radius: 8px; color: rgba(255,255,255,0.6);
+            text-decoration: none; font-size: 14px; font-weight: 500;
+            transition: all 0.15s; cursor: pointer; border: none; background: none; width: 100%; text-align: left;
+        }
+        .sidebar-link:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.9); }
+        .sidebar-link.active { background: rgba(255,255,255,0.12); color: var(--white); }
+        .sidebar-link svg { width: 18px; height: 18px; flex-shrink: 0; }
+        .sidebar-link .badge {
+            margin-left: auto; background: var(--blue-accent); color: var(--white);
+            font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 100px;
+        }
+        .sidebar-bottom {
+            margin-top: auto; padding: 16px 24px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .sidebar-user {
+            display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.6); font-size: 13px;
+        }
+        .sidebar-user-avatar {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center;
+            font-weight: 700; color: var(--white); font-size: 13px;
+        }
+        .sidebar-logout {
+            margin-top: 12px; font-size: 13px; color: rgba(255,255,255,0.4);
+            cursor: pointer; background: none; border: none; font-family: var(--font-body);
+            transition: color 0.2s;
+        }
+        .sidebar-logout:hover { color: rgba(255,255,255,0.8); }
+
+        /* === MAIN === */
+        .main { margin-left: var(--sidebar-width); min-height: 100vh; }
+        .topbar {
+            height: var(--topbar-height); background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 32px; position: sticky; top: 0; z-index: 50;
+        }
+        .topbar-title { font-family: var(--font-display); font-size: 22px; color: var(--navy); }
+        .topbar-actions { display: flex; align-items: center; gap: 12px; }
+        .topbar-btn {
+            padding: 8px 16px; border-radius: 8px; font-family: var(--font-body);
+            font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+            border: 1px solid var(--gray-200); background: var(--white); color: var(--gray-600);
+        }
+        .topbar-btn:hover { border-color: var(--gray-300); background: var(--gray-50); }
+        .topbar-btn-primary {
+            background: var(--navy); color: var(--white); border-color: var(--navy);
+        }
+        .topbar-btn-primary:hover { background: var(--blue); border-color: var(--blue); }
+
+        .content { padding: 32px; }
+
+        /* === STATS === */
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+        .stat-card {
+            background: var(--white); border-radius: 12px; padding: 20px 24px;
+            border: 1px solid var(--gray-200);
+        }
+        .stat-card-label { font-size: 13px; color: var(--gray-400); font-weight: 500; margin-bottom: 6px; }
+        .stat-card-value {
+            font-family: var(--font-display); font-size: 32px; color: var(--navy);
+            line-height: 1; margin-bottom: 4px;
+        }
+        .stat-card-change { font-size: 12px; font-weight: 600; }
+        .stat-card-change.up { color: var(--green); }
+        .stat-card-change.down { color: var(--red); }
+
+        /* === TABLE === */
+        .table-card {
+            background: var(--white); border-radius: 12px;
+            border: 1px solid var(--gray-200); overflow: hidden;
+        }
+        .table-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 24px; border-bottom: 1px solid var(--gray-200);
+        }
+        .table-header h3 { font-size: 16px; font-weight: 700; color: var(--navy); }
+        .table-filters { display: flex; gap: 8px; }
+        .filter-btn {
+            padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600;
+            border: 1px solid var(--gray-200); background: var(--white); color: var(--gray-500);
+            cursor: pointer; transition: all 0.15s; font-family: var(--font-body);
+        }
+        .filter-btn:hover { border-color: var(--gray-300); }
+        .filter-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+        table { width: 100%; border-collapse: collapse; }
+        thead th {
+            text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.5px; color: var(--gray-400); padding: 12px 16px;
+            border-bottom: 1px solid var(--gray-200); background: var(--gray-50);
+        }
+        tbody tr { transition: background 0.1s; cursor: pointer; }
+        tbody tr:hover { background: var(--sky-light); }
+        tbody td { padding: 14px 16px; border-bottom: 1px solid var(--gray-100); font-size: 14px; }
+        .td-name { font-weight: 600; color: var(--navy); }
+        .td-kommune { color: var(--gray-600); }
+        .td-email { color: var(--blue-accent); font-size: 13px; }
+        .td-date { color: var(--gray-400); font-size: 13px; }
+
+        /* === STATUS BADGES === */
+        .status {
+            display: inline-block; padding: 4px 12px; border-radius: 100px;
+            font-size: 12px; font-weight: 600;
+        }
+        .status-new { background: var(--sky); color: var(--blue); }
+        .status-contacted { background: var(--orange-light); color: var(--orange); }
+        .status-demo_scheduled { background: var(--purple-light); color: var(--purple); }
+        .status-closed_won { background: var(--green-light); color: var(--green); }
+        .status-closed_lost { background: var(--red-light); color: var(--red); }
+
+        /* === DETAIL PANEL === */
+        .detail-overlay {
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.3); z-index: 200;
+        }
+        .detail-overlay.open { display: block; }
+        .detail-panel {
+            position: fixed; top: 0; right: 0; bottom: 0;
+            width: 480px; background: var(--white); z-index: 201;
+            box-shadow: -8px 0 40px rgba(0,0,0,0.1);
+            display: flex; flex-direction: column;
+            transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .detail-overlay.open .detail-panel { transform: translateX(0); }
+        .detail-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 24px; border-bottom: 1px solid var(--gray-200);
+        }
+        .detail-header h3 { font-family: var(--font-display); font-size: 20px; color: var(--navy); }
+        .detail-close {
+            width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--gray-200);
+            background: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.15s;
+        }
+        .detail-close:hover { background: var(--gray-100); }
+        .detail-body { padding: 24px; overflow-y: auto; flex: 1; }
+        .detail-field { margin-bottom: 20px; }
+        .detail-field label { display: block; font-size: 12px; font-weight: 600; color: var(--gray-400); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .detail-field p { font-size: 15px; color: var(--gray-700); line-height: 1.5; }
+        .detail-field a { color: var(--blue-accent); text-decoration: none; }
+        .detail-status-select {
+            width: 100%; padding: 10px 14px; border: 1px solid var(--gray-200); border-radius: 8px;
+            font-family: var(--font-body); font-size: 14px; background: var(--white); cursor: pointer; outline: none;
+        }
+        .detail-status-select:focus { border-color: var(--blue-accent); }
+        .detail-notes-input {
+            width: 100%; padding: 10px 14px; border: 1px solid var(--gray-200); border-radius: 8px;
+            font-family: var(--font-body); font-size: 14px; min-height: 100px; resize: vertical; outline: none;
+        }
+        .detail-notes-input:focus { border-color: var(--blue-accent); }
+        .detail-save {
+            width: 100%; padding: 12px; background: var(--navy); color: var(--white);
+            border: none; border-radius: 8px; font-family: var(--font-body);
+            font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-top: 8px;
+        }
+        .detail-save:hover { background: var(--blue); }
+        .detail-footer {
+            padding: 16px 24px; border-top: 1px solid var(--gray-200);
+            display: flex; gap: 8px;
+        }
+
+        /* === EMPTY STATE === */
+        .empty-state {
+            text-align: center; padding: 64px 32px; color: var(--gray-400);
+        }
+        .empty-state svg { width: 48px; height: 48px; margin-bottom: 16px; color: var(--gray-300); }
+        .empty-state h3 { font-size: 16px; color: var(--gray-500); margin-bottom: 4px; }
+        .empty-state p { font-size: 14px; }
+
+        /* === TOAST === */
+        .toast {
+            position: fixed; bottom: 24px; right: 24px;
+            background: var(--navy); color: var(--white); padding: 14px 24px;
+            border-radius: 10px; font-size: 14px; font-weight: 500;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            transform: translateY(100px); opacity: 0; transition: all 0.3s; z-index: 500;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { background: var(--green); }
+        .toast.error { background: var(--red); }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .main { margin-left: 0; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .detail-panel { width: 100%; }
+        }
+        @media (max-width: 600px) {
+            .stats-row { grid-template-columns: 1fr; }
+            .content { padding: 16px; }
+            .topbar { padding: 0 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen" class="login-wrap">
+    <div class="login-card">
+        <div class="login-logo">
+            <div class="login-logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <span class="login-logo-text">BürgerDirekt</span>
+        </div>
+        <p class="login-title">Melden Sie sich an, um fortzufahren</p>
+        <form id="loginForm">
+            <div class="login-group">
+                <label>E-Mail</label>
+                <input type="email" id="loginEmail" placeholder="ihre@email.de" required>
+            </div>
+            <div class="login-group">
+                <label>Passwort</label>
+                <input type="password" id="loginPassword" placeholder="Passwort" required>
+            </div>
+            <button type="submit" class="login-btn" id="loginBtn">Anmelden</button>
+            <div class="login-error" id="loginError"></div>
+        </form>
+    </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="sidebar-logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <span class="sidebar-logo-text">BürgerDirekt</span>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Vertrieb</div>
+            <button class="sidebar-link active" onclick="switchView('leads')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                Kontaktanfragen
+                <span class="badge" id="newLeadsBadge">0</span>
+            </button>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-section-title">Plattform</div>
+            <button class="sidebar-link" onclick="switchView('anliegen')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                Bürgeranliegen
+            </button>
+            <button class="sidebar-link" onclick="switchView('kommunen')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"/></svg>
+                Kommunen
+            </button>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-user">
+                <div class="sidebar-user-avatar" id="userAvatar">T</div>
+                <span id="userName">Admin</span>
+            </div>
+            <button class="sidebar-logout" onclick="logout()">Abmelden</button>
+        </div>
+    </aside>
+
+    <!-- Main content -->
+    <div class="main">
+        <div class="topbar">
+            <h1 class="topbar-title" id="viewTitle">Kontaktanfragen</h1>
+            <div class="topbar-actions">
+                <button class="topbar-btn" onclick="loadLeads()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="vertical-align:-2px;margin-right:4px;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+                    Aktualisieren
+                </button>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- LEADS VIEW -->
+            <div id="viewLeads">
+                <div class="stats-row" id="statsRow">
+                    <div class="stat-card">
+                        <div class="stat-card-label">Gesamt</div>
+                        <div class="stat-card-value" id="statTotal">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-label">Neu</div>
+                        <div class="stat-card-value" id="statNew" style="color:var(--blue-accent)">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-label">Demo geplant</div>
+                        <div class="stat-card-value" id="statDemo" style="color:var(--purple)">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-label">Gewonnen</div>
+                        <div class="stat-card-value" id="statWon" style="color:var(--green)">0</div>
+                    </div>
+                </div>
+
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Alle Anfragen</h3>
+                        <div class="table-filters" id="statusFilters">
+                            <button class="filter-btn active" data-filter="all">Alle</button>
+                            <button class="filter-btn" data-filter="new">Neu</button>
+                            <button class="filter-btn" data-filter="contacted">Kontaktiert</button>
+                            <button class="filter-btn" data-filter="demo_scheduled">Demo</button>
+                            <button class="filter-btn" data-filter="closed_won">Gewonnen</button>
+                            <button class="filter-btn" data-filter="closed_lost">Verloren</button>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Kommune</th>
+                                <th>Position</th>
+                                <th>E-Mail</th>
+                                <th>Status</th>
+                                <th>Datum</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leadsTable"></tbody>
+                    </table>
+                    <div class="empty-state" id="emptyLeads" style="display:none;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                        <h3>Keine Anfragen</h3>
+                        <p>Sobald jemand das Kontaktformular ausfüllt, erscheinen die Anfragen hier.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANLIEGEN VIEW -->
+            <div id="viewAnliegen" style="display:none;">
+                <div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <h3>Bürgeranliegen</h3>
+                    <p>Hier erscheinen Bürgeranliegen, sobald die erste Kommune live ist. Das SMS-Formular und die Twilio-Integration werden in Phase 2 eingerichtet.</p>
+                </div>
+            </div>
+
+            <!-- KOMMUNEN VIEW -->
+            <div id="viewKommunen" style="display:none;">
+                <div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"/></svg>
+                    <h3>Kommunen</h3>
+                    <p>Hier verwaltest du deine Kommunen-Kunden. Jede Kommune bekommt ein eigenes Dashboard mit Abteilungen und Anliegen-Tracking. Wird aktiviert sobald der erste Kunde onboarded ist.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DETAIL PANEL -->
+<div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
+    <div class="detail-panel" onclick="event.stopPropagation()">
+        <div class="detail-header">
+            <h3 id="detailName">Lead Details</h3>
+            <button class="detail-close" onclick="closeDetail()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="detail-body">
+            <div class="detail-field">
+                <label>Anrede</label>
+                <p id="detailAnrede">-</p>
+            </div>
+            <div class="detail-field">
+                <label>Name</label>
+                <p id="detailFullName">-</p>
+            </div>
+            <div class="detail-field">
+                <label>Kommune</label>
+                <p id="detailKommune">-</p>
+            </div>
+            <div class="detail-field">
+                <label>Position</label>
+                <p id="detailPosition">-</p>
+            </div>
+            <div class="detail-field">
+                <label>E-Mail</label>
+                <p id="detailEmail">-</p>
+            </div>
+            <div class="detail-field">
+                <label>Telefon</label>
+                <p id="detailTelefon">-</p>
+            </div>
+            <div class="detail-field">
+                <label>Nachricht</label>
+                <p id="detailNachricht">-</p>
+            </div>
+            <div class="detail-field">
+                <label>Eingegangen am</label>
+                <p id="detailDate">-</p>
+            </div>
+            <hr style="border:none;border-top:1px solid var(--gray-200);margin:20px 0;">
+            <div class="detail-field">
+                <label>Status ändern</label>
+                <select class="detail-status-select" id="detailStatus">
+                    <option value="new">Neu</option>
+                    <option value="contacted">Kontaktiert</option>
+                    <option value="demo_scheduled">Demo geplant</option>
+                    <option value="closed_won">Gewonnen</option>
+                    <option value="closed_lost">Verloren</option>
+                </select>
+            </div>
+            <div class="detail-field">
+                <label>Interne Notizen</label>
+                <textarea class="detail-notes-input" id="detailNotes" placeholder="Notizen hinzufügen..."></textarea>
+            </div>
+            <button class="detail-save" onclick="saveDetail()">Änderungen speichern</button>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// === CONFIG ===
+var SUPABASE_URL = 'https://nqplrwmodtzljraxxviy.supabase.co';
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xcGxyd21vZHR6bGpyYXh4dml5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDc3MDYsImV4cCI6MjA4ODk4MzcwNn0.ppUDcR2Bq4K83NczGUcFo670cIzxxAGm2I0LzRg9IFw';
+
+var currentLeads = [];
+var currentFilter = 'all';
+var selectedLeadId = null;
+var authToken = null;
+
+// === API HELPERS ===
+function apiHeaders(token) {
+    return {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + (token || authToken || SUPABASE_KEY)
+    };
+}
+
+function api(method, path, body, token) {
+    var opts = { method: method, headers: apiHeaders(token) };
+    if (body) opts.body = JSON.stringify(body);
+    return fetch(SUPABASE_URL + path, opts).then(function(r) {
+        if (!r.ok) throw new Error('API Error: ' + r.status);
+        var ct = r.headers.get('content-type');
+        if (ct && ct.indexOf('json') > -1) return r.json();
+        return null;
+    });
+}
+
+// === AUTH ===
+function login() {
+    var email = document.getElementById('loginEmail').value;
+    var password = document.getElementById('loginPassword').value;
+    var btn = document.getElementById('loginBtn');
+    var errEl = document.getElementById('loginError');
+    btn.textContent = 'Wird angemeldet...';
+    btn.disabled = true;
+    errEl.style.display = 'none';
+
+    fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+        body: JSON.stringify({ email: email, password: password })
+    }).then(function(r) { return r.json(); })
+    .then(function(data) {
+        if (data.error || !data.access_token) {
+            errEl.textContent = 'E-Mail oder Passwort falsch';
+            errEl.style.display = 'block';
+            btn.textContent = 'Anmelden';
+            btn.disabled = false;
+            return;
+        }
+        authToken = data.access_token;
+        localStorage.setItem('bd_token', data.access_token);
+        localStorage.setItem('bd_refresh', data.refresh_token);
+        localStorage.setItem('bd_user', JSON.stringify(data.user));
+        showApp(data.user);
+    }).catch(function() {
+        errEl.textContent = 'Verbindungsfehler';
+        errEl.style.display = 'block';
+        btn.textContent = 'Anmelden';
+        btn.disabled = false;
+    });
+}
+
+function logout() {
+    localStorage.removeItem('bd_token');
+    localStorage.removeItem('bd_refresh');
+    localStorage.removeItem('bd_user');
+    authToken = null;
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+}
+
+function checkSession() {
+    var token = localStorage.getItem('bd_token');
+    var user = localStorage.getItem('bd_user');
+    if (token && user) {
+        authToken = token;
+        showApp(JSON.parse(user));
+    }
+}
+
+function showApp(user) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    var name = (user.user_metadata && user.user_metadata.full_name) || user.email || 'Admin';
+    document.getElementById('userName').textContent = name;
+    document.getElementById('userAvatar').textContent = name.charAt(0).toUpperCase();
+    loadLeads();
+}
+
+// === LEADS ===
+function loadLeads() {
+    api('GET', '/rest/v1/contact_leads?order=created_at.desc').then(function(data) {
+        currentLeads = data || [];
+        updateStats();
+        renderLeads();
+    }).catch(function(err) {
+        console.error('Load error:', err);
+        showToast('Fehler beim Laden', 'error');
+    });
+}
+
+function updateStats() {
+    var total = currentLeads.length;
+    var newCount = currentLeads.filter(function(l) { return l.status === 'new'; }).length;
+    var demoCount = currentLeads.filter(function(l) { return l.status === 'demo_scheduled'; }).length;
+    var wonCount = currentLeads.filter(function(l) { return l.status === 'closed_won'; }).length;
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statNew').textContent = newCount;
+    document.getElementById('statDemo').textContent = demoCount;
+    document.getElementById('statWon').textContent = wonCount;
+    document.getElementById('newLeadsBadge').textContent = newCount;
+}
+
+function renderLeads() {
+    var filtered = currentFilter === 'all' ? currentLeads : currentLeads.filter(function(l) { return l.status === currentFilter; });
+    var tbody = document.getElementById('leadsTable');
+    var empty = document.getElementById('emptyLeads');
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+
+    var statusLabels = { new: 'Neu', contacted: 'Kontaktiert', demo_scheduled: 'Demo geplant', closed_won: 'Gewonnen', closed_lost: 'Verloren' };
+    tbody.innerHTML = filtered.map(function(lead) {
+        var date = new Date(lead.created_at);
+        var dateStr = date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        var timeStr = date.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+        return '<tr onclick="openDetail(\'' + lead.id + '\')">' +
+            '<td class="td-name">' + esc(lead.name) + '</td>' +
+            '<td class="td-kommune">' + esc(lead.kommune) + '</td>' +
+            '<td>' + esc(lead.position || '-') + '</td>' +
+            '<td class="td-email">' + esc(lead.email) + '</td>' +
+            '<td><span class="status status-' + lead.status + '">' + statusLabels[lead.status] + '</span></td>' +
+            '<td class="td-date">' + dateStr + ' ' + timeStr + '</td>' +
+        '</tr>';
+    }).join('');
+}
+
+function esc(str) {
+    if (!str) return '';
+    var d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+}
+
+// === FILTERS ===
+document.getElementById('statusFilters').addEventListener('click', function(e) {
+    var btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    currentFilter = btn.dataset.filter;
+    document.querySelectorAll('#statusFilters .filter-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    renderLeads();
+});
+
+// === DETAIL PANEL ===
+function openDetail(id) {
+    selectedLeadId = id;
+    var lead = currentLeads.find(function(l) { return l.id === id; });
+    if (!lead) return;
+
+    document.getElementById('detailName').textContent = lead.name;
+    document.getElementById('detailAnrede').textContent = lead.anrede || '-';
+    document.getElementById('detailFullName').textContent = lead.name;
+    document.getElementById('detailKommune').textContent = lead.kommune;
+    document.getElementById('detailPosition').textContent = lead.position || '-';
+    document.getElementById('detailEmail').innerHTML = lead.email ? '<a href="mailto:' + esc(lead.email) + '">' + esc(lead.email) + '</a>' : '-';
+    document.getElementById('detailTelefon').innerHTML = lead.telefon ? '<a href="tel:' + esc(lead.telefon) + '">' + esc(lead.telefon) + '</a>' : '-';
+    document.getElementById('detailNachricht').textContent = lead.nachricht || 'Keine Nachricht';
+
+    var date = new Date(lead.created_at);
+    document.getElementById('detailDate').textContent = date.toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+    document.getElementById('detailStatus').value = lead.status;
+    document.getElementById('detailNotes').value = lead.notes || '';
+
+    document.getElementById('detailOverlay').classList.add('open');
+}
+
+function closeDetail(e) {
+    if (e && e.target !== document.getElementById('detailOverlay')) return;
+    document.getElementById('detailOverlay').classList.remove('open');
+    selectedLeadId = null;
+}
+
+function saveDetail() {
+    if (!selectedLeadId) return;
+    var status = document.getElementById('detailStatus').value;
+    var notes = document.getElementById('detailNotes').value;
+
+    api('PATCH', '/rest/v1/contact_leads?id=eq.' + selectedLeadId, { status: status, notes: notes })
+    .then(function() {
+        var lead = currentLeads.find(function(l) { return l.id === selectedLeadId; });
+        if (lead) { lead.status = status; lead.notes = notes; }
+        updateStats();
+        renderLeads();
+        closeDetail();
+        showToast('Gespeichert', 'success');
+    }).catch(function() {
+        showToast('Fehler beim Speichern', 'error');
+    });
+}
+
+// === NAVIGATION ===
+function switchView(view) {
+    var views = { leads: 'Kontaktanfragen', anliegen: 'Bürgeranliegen', kommunen: 'Kommunen' };
+    document.getElementById('viewTitle').textContent = views[view] || '';
+    document.getElementById('viewLeads').style.display = view === 'leads' ? 'block' : 'none';
+    document.getElementById('viewAnliegen').style.display = view === 'anliegen' ? 'block' : 'none';
+    document.getElementById('viewKommunen').style.display = view === 'kommunen' ? 'block' : 'none';
+    document.querySelectorAll('.sidebar-link').forEach(function(l) { l.classList.remove('active'); });
+    event.currentTarget.classList.add('active');
+}
+
+// === TOAST ===
+function showToast(msg, type) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast ' + (type || '') + ' show';
+    setTimeout(function() { t.classList.remove('show'); }, 2500);
+}
+
+// === KEYBOARD ===
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeDetail();
+});
+
+// === INIT ===
+document.getElementById('loginForm').addEventListener('submit', function(e) { e.preventDefault(); login(); });
+checkSession();
+</script>
+</body>
+</html>
