@@ -1426,7 +1426,7 @@
                     Was ist mit älteren Bürgern ohne Smartphone?
                     <div class="faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
                 </button>
-                <div class="faq-answer"><div class="faq-answer-inner">Die Bandansage informiert auch ohne SMS über die nächsten Schritte. Zusätzlich können Mitarbeiter Anliegen jederzeit manuell ins Dashboard eintragen. Kein Bürger wird ausgeschlossen.</div></div>
+                <div class="faq-answer"><div class="faq-answer-inner">BürgerDirekt erkennt automatisch, ob der Anruf von einem Mobiltelefon oder Festnetz kommt. Bei Mobilfunk wird die SMS direkt zugestellt. Bei Festnetz wird der Anrufer gebeten, seine Mobilfunknummer über die Telefontasten einzugeben&nbsp;– die SMS geht dann dorthin. Alternativ kann eine Sprachnachricht hinterlassen werden, die von Mitarbeitern ins Dashboard übertragen wird. Kein Bürger wird ausgeschlossen.</div></div>
             </div>
         </div>
     </div>
@@ -1516,7 +1516,12 @@
     </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
+// Supabase init
+const SUPABASE_URL = 'https://nqplrwmodtzljraxxviy.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xcGxyd21vZHR6bGpyYXh4dml5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDc3MDYsImV4cCI6MjA4ODk4MzcwNn0.ppUDcR2Bq4K83NczGUcFo670cIzxxAGm2I0LzRg9IFw';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // Scroll reveal
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -1553,20 +1558,32 @@ function toggleFaq(btn) {
     }
 }
 
-// Form submission
-document.getElementById('contactForm').addEventListener('submit', function(e) {
+// Form submission → Supabase
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
     e.preventDefault();
-    var data = {
-        anrede: this.anrede.value,
+    const btn = this.querySelector('.form-submit');
+    const originalText = btn.textContent;
+    btn.textContent = 'Wird gesendet...';
+    btn.disabled = true;
+
+    const { error } = await supabase.from('contact_leads').insert({
+        anrede: this.anrede.value || null,
         name: this.name.value,
         kommune: this.kommune.value,
-        position: this.position.value,
+        position: this.position.value || null,
         email: this.email.value,
-        telefon: this.telefon.value,
-        nachricht: this.nachricht.value,
-        timestamp: new Date().toISOString()
-    };
-    console.log('BürgerDirekt Lead:', data);
+        telefon: this.telefon.value || null,
+        nachricht: this.nachricht.value || null
+    });
+
+    if (error) {
+        console.error('Fehler:', error);
+        btn.textContent = 'Fehler – bitte erneut versuchen';
+        btn.disabled = false;
+        setTimeout(() => { btn.textContent = originalText; }, 3000);
+        return;
+    }
+
     this.style.display = 'none';
     document.getElementById('formSuccess').style.display = 'block';
 });
@@ -1577,12 +1594,3 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            // Close mobile menu
-            document.getElementById('nav').classList.remove('mobile-open');
-        }
-    });
-});
-</script>
-</body>
-</html>
