@@ -1516,13 +1516,9 @@
     </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-// Supabase init
-const SUPABASE_URL = 'https://nqplrwmodtzljraxxviy.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xcGxyd21vZHR6bGpyYXh4dml5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDc3MDYsImV4cCI6MjA4ODk4MzcwNn0.ppUDcR2Bq4K83NczGUcFo670cIzxxAGm2I0LzRg9IFw';
-let sb;
-try { sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); } catch(e) { console.error('Supabase init failed:', e); }
+var SUPABASE_URL = 'https://nqplrwmodtzljraxxviy.supabase.co';
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xcGxyd21vZHR6bGpyYXh4dml5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0MDc3MDYsImV4cCI6MjA4ODk4MzcwNn0.ppUDcR2Bq4K83NczGUcFo670cIzxxAGm2I0LzRg9IFw';
 // Scroll reveal
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -1559,38 +1555,56 @@ function toggleFaq(btn) {
     }
 }
 
-// Form submission → Supabase
-document.getElementById('contactForm').addEventListener('submit', async function(e) {
+// Form submission via fetch to Supabase REST API
+document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    const form = this;
-    const btn = form.querySelector('.form-submit');
-    const originalText = btn.textContent;
+    var form = this;
+    var btn = form.querySelector('.form-submit');
+    var originalText = btn.textContent;
     btn.textContent = 'Wird gesendet...';
     btn.disabled = true;
 
-    try {
-        if (!sb) throw new Error('Supabase nicht verfügbar');
+    var payload = {
+        anrede: form.anrede.value || null,
+        name: form.elements.namedItem('name').value,
+        kommune: form.kommune.value,
+        position: form.position.value || null,
+        email: form.email.value,
+        telefon: form.telefon.value || null,
+        nachricht: form.nachricht.value || null
+    };
 
-        const { error } = await sb.from('contact_leads').insert({
-            anrede: form.anrede.value || null,
-            name: form.elements.namedItem('name').value,
-            kommune: form.kommune.value,
-            position: form.position.value || null,
-            email: form.email.value,
-            telefon: form.telefon.value || null,
-            nachricht: form.nachricht.value || null
-        });
-
-        if (error) throw error;
-
+    fetch(SUPABASE_URL + '/rest/v1/contact_leads', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_KEY
+        },
+        body: JSON.stringify(payload)
+    }).then(function(res) {
+        if (!res.ok) throw new Error('Status ' + res.status);
         form.style.display = 'none';
         document.getElementById('formSuccess').style.display = 'block';
-    } catch(err) {
+    }).catch(function(err) {
         console.error('Fehler:', err);
-        btn.textContent = 'Fehler – bitte erneut versuchen';
+        btn.textContent = 'Fehler - bitte erneut versuchen';
         btn.disabled = false;
         setTimeout(function() { btn.textContent = originalText; }, 3000);
-    }
+    });
 });
 
-// Smooth scroll for anchor
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+        e.preventDefault();
+        var target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.getElementById('nav').classList.remove('mobile-open');
+        }
+    });
+});
+</script>
+</body>
+</html>
