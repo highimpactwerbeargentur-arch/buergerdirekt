@@ -3,400 +3,568 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BürgerDirekt – Kein Bürgeranruf geht mehr verloren</title>
-    <meta name="description" content="BürgerDirekt erfasst Bürgeranliegen automatisch per SMS-Formular – strukturiert, nachvollziehbar, DSGVO-konform. Für Kommunen, Gemeinden und Städte.">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://www.leadcall24.de/Leadcall24.png">
-    <link rel="apple-touch-icon" href="https://www.leadcall24.de/Leadcall24.png">
-
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="BürgerDirekt – Kein Bürgeranruf geht mehr verloren">
-    <meta property="og:description" content="Automatisierte Anrufannahme und Anliegenerfassung per SMS-Formular für Kommunen, Gemeinden und Städte. DSGVO-konform, ohne Installation.">
-    <meta property="og:image" content="https://www.leadcall24.de/Leadcall24.png">
-    <meta property="og:url" content="https://www.buergerdirekt.de">
-    <meta property="og:locale" content="de_DE">
-    <meta property="og:site_name" content="BürgerDirekt">
-
-    <!-- Schema.org structured data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "LeadCall24",
-        "url": "https://www.leadcall24.de",
-        "logo": "https://www.leadcall24.de/Leadcall24.png",
-        "description": "Digitaler Assistent für Handwerksbetriebe – Automatisiertes Anrufmanagement und Lead-Erfassung",
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+49-163-1692010",
-            "contactType": "sales",
-            "availableLanguage": "German"
-        },
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Unter den Linden 9",
-            "addressLocality": "Werder (Havel)",
-            "postalCode": "14542",
-            "addressCountry": "DE"
-        }
-    }
-    </script>
-
+    <title>BürgerDirekt – Digitales Bürgeranliegen-Management für Kommunen</title>
+    <meta name="description" content="BürgerDirekt erfasst Bürgeranliegen automatisch per Telefon und SMS-Formular. 24/7 erreichbar, DSGVO-konform, ohne IT-Projekt.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
         :root {
-            --blue-900: #1a365d;
-            --blue-800: #1e3a5f;
-            --blue-700: #2c5282;
-            --blue-600: #2b6cb0;
-            --blue-500: #3182ce;
-            --blue-100: #ebf8ff;
-            --blue-50: #f0f7ff;
-            --gray-50: #f7fafc;
-            --gray-100: #edf2f7;
-            --gray-200: #e2e8f0;
-            --gray-300: #cbd5e0;
-            --gray-400: #a0aec0;
-            --gray-500: #718096;
-            --gray-600: #4a5568;
-            --gray-700: #2d3748;
-            --gray-800: #1a202c;
-            --white: #ffffff;
-            --red-50: #fff5f5;
-            --red-500: #e53e3e;
-            --green-500: #38a169;
+            --navy: #0B1D35;
+            --navy-light: #132B4D;
+            --blue: #1B4B8A;
+            --blue-accent: #2E7DD1;
+            --sky: #E8F1FA;
+            --sky-light: #F4F8FC;
+            --cream: #FAFAF8;
+            --white: #FFFFFF;
+            --gray-100: #F5F5F5;
+            --gray-200: #E8E8E8;
+            --gray-300: #D1D1D1;
+            --gray-400: #9E9E9E;
+            --gray-500: #6B6B6B;
+            --gray-600: #4A4A4A;
+            --gray-700: #2D2D2D;
+            --warm: #C47A2B;
+            --warm-light: #FFF8F0;
+            --green: #1A7A4C;
+            --green-light: #E8F5EE;
+            --red-light: #FFF0F0;
+            --red: #C0392B;
+            --font-display: 'DM Serif Display', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, sans-serif;
+            --max-width: 1200px;
+            --section-pad: clamp(80px, 10vw, 140px);
         }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: var(--gray-800);
-            line-height: 1.6;
+            font-family: var(--font-body);
+            color: var(--gray-700);
+            background: var(--white);
+            line-height: 1.7;
+            font-size: 17px;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1120px;
-            margin: 0 auto;
-            padding: 0 24px;
+        /* === UTILITY === */
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
+        .text-center { text-align: center; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+        /* === ANIMATIONS === */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideRight {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        @keyframes countUp {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        /* ── NAV ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* === NAV === */
         nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(255,255,255,0.97);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-bottom: 1px solid var(--gray-200);
-            z-index: 100;
-            transition: box-shadow 0.2s;
+            z-index: 1000;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
         }
         nav.scrolled {
-            box-shadow: 0 1px 12px rgba(0,0,0,0.06);
+            box-shadow: 0 1px 20px rgba(0,0,0,0.06);
         }
         .nav-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 clamp(20px, 4vw, 40px);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 64px;
+            height: 72px;
         }
         .nav-logo {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--blue-900);
-            text-decoration: none;
-            letter-spacing: -0.025em;
-        }
-        .nav-links {
             display: flex;
             align-items: center;
-            gap: 28px;
-            list-style: none;
-        }
-        .nav-links a {
-            color: var(--gray-600);
+            gap: 10px;
             text-decoration: none;
-            font-size: 0.875rem;
+        }
+        .nav-logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--navy);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nav-logo-icon svg { width: 20px; height: 20px; }
+        .nav-logo-text {
+            font-family: var(--font-display);
+            font-size: 22px;
+            color: var(--navy);
+            letter-spacing: -0.3px;
+        }
+        .nav-links { display: flex; align-items: center; gap: 36px; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-600);
+            font-size: 15px;
             font-weight: 500;
-            transition: color 0.15s;
+            transition: color 0.2s;
+            letter-spacing: -0.1px;
         }
-        .nav-links a:hover { color: var(--blue-900); }
-        .nav-cta-link {
-            background: var(--blue-900);
+        .nav-links a:hover { color: var(--navy); }
+        .nav-cta {
+            background: var(--navy) !important;
             color: var(--white) !important;
-            padding: 9px 22px;
-            border-radius: 6px;
-            font-size: 0.85rem !important;
-            transition: background 0.15s;
+            padding: 10px 24px !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            font-size: 14px !important;
+            transition: all 0.2s !important;
         }
-        .nav-cta-link:hover { background: var(--blue-700); }
-        .nav-hamburger {
+        .nav-cta:hover { background: var(--navy-light) !important; transform: translateY(-1px); }
+        .nav-mobile-toggle {
             display: none;
             background: none;
             border: none;
             cursor: pointer;
-            padding: 4px;
-            color: var(--gray-700);
+            padding: 8px;
+        }
+        .nav-mobile-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--navy);
+            margin: 5px 0;
+            transition: all 0.3s;
+            border-radius: 2px;
         }
 
-        /* ── SECTION DEFAULTS ── */
-        section { padding: 88px 0; }
-        .section-alt { background: var(--gray-50); }
-        .section-label {
-            font-size: 0.775rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--blue-600);
-            margin-bottom: 10px;
-        }
-        .section-title {
-            font-size: 2.1rem;
-            font-weight: 700;
-            color: var(--blue-900);
-            margin-bottom: 14px;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
-        }
-        .section-subtitle {
-            font-size: 1.05rem;
-            color: var(--gray-500);
-            max-width: 620px;
-            line-height: 1.65;
-            margin-bottom: 48px;
-        }
-        .centered { text-align: center; }
-        .centered .section-subtitle { margin-left: auto; margin-right: auto; }
-
-        /* ── HERO ── */
+        /* === HERO === */
         .hero {
-            padding: 144px 0 88px;
-            background: linear-gradient(168deg, #0f2744 0%, var(--blue-900) 40%, var(--blue-800) 100%);
-            color: var(--white);
+            padding: 160px 0 var(--section-pad);
+            background: linear-gradient(175deg, var(--white) 0%, var(--sky-light) 50%, var(--sky) 100%);
             position: relative;
             overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(46,125,209,0.06) 0%, transparent 70%);
+            border-radius: 50%;
         }
         .hero::after {
             content: '';
             position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+            bottom: -100px;
+            left: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(196,122,43,0.04) 0%, transparent 70%);
             border-radius: 50%;
         }
-        .hero-content {
-            max-width: 680px;
-            position: relative;
-            z-index: 1;
+        .hero .container { position: relative; z-index: 1; }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--blue);
+            margin-bottom: 32px;
+            animation: fadeUp 0.6s ease both;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s ease infinite;
         }
         .hero h1 {
-            font-size: 2.85rem;
-            font-weight: 800;
-            line-height: 1.12;
-            margin-bottom: 20px;
-            letter-spacing: -0.03em;
+            font-family: var(--font-display);
+            font-size: clamp(40px, 5.5vw, 72px);
+            line-height: 1.08;
+            color: var(--navy);
+            margin-bottom: 28px;
+            letter-spacing: -1.5px;
+            max-width: 800px;
+            animation: fadeUp 0.6s ease 0.1s both;
+        }
+        .hero h1 em {
+            font-style: normal;
+            color: var(--blue-accent);
+            position: relative;
+        }
+        .hero h1 em::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--blue-accent);
+            opacity: 0.3;
+            border-radius: 2px;
         }
         .hero-sub {
-            font-size: 1.125rem;
-            color: rgba(255,255,255,0.8);
-            line-height: 1.7;
-            margin-bottom: 36px;
-            max-width: 580px;
+            font-size: clamp(18px, 2vw, 21px);
+            color: var(--gray-500);
+            max-width: 620px;
+            line-height: 1.65;
+            margin-bottom: 44px;
+            animation: fadeUp 0.6s ease 0.2s both;
+            font-weight: 400;
+        }
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            animation: fadeUp 0.6s ease 0.3s both;
         }
         .btn-primary {
-            display: inline-block;
-            background: var(--white);
-            color: var(--blue-900);
-            padding: 14px 32px;
-            border-radius: 8px;
-            font-size: 0.975rem;
-            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--navy);
+            color: var(--white);
+            padding: 16px 32px;
+            border-radius: 10px;
             text-decoration: none;
-            transition: transform 0.15s, box-shadow 0.15s;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             border: none;
             cursor: pointer;
-            font-family: inherit;
+            letter-spacing: -0.2px;
         }
-        .btn-primary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        .btn-primary:hover { background: var(--blue); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(11,29,53,0.2); }
+        .btn-primary svg { width: 18px; height: 18px; transition: transform 0.2s; }
+        .btn-primary:hover svg { transform: translateX(3px); }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            padding: 16px 8px;
+            transition: color 0.2s;
         }
+        .btn-secondary:hover { color: var(--navy); }
         .hero-trust {
-            margin-top: 48px;
-            padding-top: 28px;
-            border-top: 1px solid rgba(255,255,255,0.12);
             display: flex;
-            gap: 36px;
+            align-items: center;
+            gap: 24px;
+            margin-top: 56px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(0,0,0,0.06);
+            animation: fadeUp 0.6s ease 0.4s both;
             flex-wrap: wrap;
         }
         .trust-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.6);
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray-500);
             font-weight: 500;
         }
-        .trust-item svg { flex-shrink: 0; opacity: 0.7; }
+        .trust-item svg { width: 18px; height: 18px; color: var(--green); flex-shrink: 0; }
 
-        /* ── PROBLEMS ── */
-        .problems-grid {
+        /* === PROBLEM === */
+        .problem {
+            padding: var(--section-pad) 0;
+            background: var(--white);
+        }
+        .section-label {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--blue-accent);
+            margin-bottom: 16px;
+        }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 3.8vw, 48px);
+            color: var(--navy);
+            line-height: 1.15;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+        }
+        .section-desc {
+            font-size: 18px;
+            color: var(--gray-500);
+            max-width: 600px;
+            line-height: 1.7;
+            margin-bottom: 56px;
+        }
+        .problem-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 28px;
+            gap: 24px;
         }
         .problem-card {
-            background: var(--white);
+            padding: 40px 32px;
+            border-radius: 16px;
             border: 1px solid var(--gray-200);
-            border-radius: 12px;
-            padding: 32px 28px;
-            transition: box-shadow 0.2s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        .problem-card:hover {
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        .problem-card:hover { border-color: var(--gray-300); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.06); }
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
         }
+        .problem-card:nth-child(1)::before { background: var(--red); }
+        .problem-card:nth-child(2)::before { background: var(--warm); }
+        .problem-card:nth-child(3)::before { background: var(--gray-400); }
+        .problem-card:nth-child(1) { background: var(--red-light); border-color: rgba(192,57,43,0.1); }
+        .problem-card:nth-child(2) { background: var(--warm-light); border-color: rgba(196,122,43,0.1); }
+        .problem-card:nth-child(3) { background: var(--gray-100); }
         .problem-icon {
             width: 48px;
             height: 48px;
-            background: var(--red-50);
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
+        .problem-card:nth-child(1) .problem-icon { background: rgba(192,57,43,0.12); }
+        .problem-card:nth-child(2) .problem-icon { background: rgba(196,122,43,0.12); }
+        .problem-card:nth-child(3) .problem-icon { background: rgba(107,107,107,0.12); }
+        .problem-icon svg { width: 24px; height: 24px; }
         .problem-card h3 {
-            font-size: 1.075rem;
-            font-weight: 700;
-            color: var(--gray-800);
-            margin-bottom: 10px;
+            font-family: var(--font-display);
+            font-size: 22px;
+            color: var(--navy);
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
         }
         .problem-card p {
-            font-size: 0.925rem;
-            color: var(--gray-500);
-            line-height: 1.65;
+            font-size: 15px;
+            color: var(--gray-600);
+            line-height: 1.7;
         }
 
-        /* ── STEPS ── */
+        /* === STATS BAND === */
+        .stats-band {
+            padding: 64px 0;
+            background: var(--navy);
+            position: relative;
+            overflow: hidden;
+        }
+        .stats-band::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 20% 50%, rgba(46,125,209,0.15) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(196,122,43,0.08) 0%, transparent 60%);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        .stat-item { text-align: center; }
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: clamp(36px, 4vw, 52px);
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* === HOW IT WORKS === */
+        .how-it-works {
+            padding: var(--section-pad) 0;
+            background: var(--sky-light);
+        }
         .steps-container {
-            max-width: 600px;
+            max-width: 900px;
             margin: 0 auto;
         }
         .step {
             display: flex;
-            gap: 24px;
+            gap: 32px;
+            align-items: flex-start;
+            position: relative;
+            padding-bottom: 48px;
         }
-        .step-rail {
+        .step:last-child { padding-bottom: 0; }
+        .step-indicator {
+            flex-shrink: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex-shrink: 0;
         }
-        .step-dot {
-            width: 42px;
-            height: 42px;
-            background: var(--blue-900);
-            color: var(--white);
+        .step-number {
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
+            background: var(--navy);
+            color: var(--white);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.85rem;
-            font-weight: 700;
-            flex-shrink: 0;
+            font-family: var(--font-display);
+            font-size: 22px;
+            position: relative;
+            z-index: 1;
         }
         .step-line {
             width: 2px;
             flex: 1;
-            background: var(--gray-200);
-            margin: 6px 0;
-            min-height: 20px;
+            background: linear-gradient(to bottom, var(--navy), var(--gray-300));
+            margin-top: 8px;
+            min-height: 40px;
         }
         .step:last-child .step-line { display: none; }
-        .step-body {
-            padding-bottom: 36px;
-            padding-top: 8px;
+        .step-content { padding-top: 10px; flex: 1; }
+        .step-content h3 {
+            font-family: var(--font-display);
+            font-size: 22px;
+            color: var(--navy);
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
         }
-        .step:last-child .step-body { padding-bottom: 0; }
-        .step-body h3 {
-            font-size: 1.025rem;
-            font-weight: 700;
-            color: var(--gray-800);
-            margin-bottom: 5px;
-        }
-        .step-body p {
-            font-size: 0.925rem;
+        .step-content p {
+            font-size: 16px;
             color: var(--gray-500);
-            line-height: 1.65;
+            line-height: 1.7;
+        }
+        .step-highlight {
+            display: inline-block;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--blue);
+            margin-top: 10px;
         }
 
-        /* ── DEPARTMENTS ── */
+        /* === DEPARTMENTS === */
+        .departments {
+            padding: var(--section-pad) 0;
+            background: var(--white);
+        }
         .dept-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
+            gap: 16px;
         }
         .dept-card {
-            background: var(--white);
-            border: 1px solid var(--gray-200);
-            border-radius: 12px;
             padding: 28px 24px;
-            transition: box-shadow 0.2s;
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+            background: var(--white);
+            transition: all 0.25s ease;
         }
-        .dept-card:hover {
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        .dept-card:hover { border-color: var(--blue-accent); background: var(--sky-light); transform: translateY(-2px); }
+        .dept-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
         }
         .dept-icon {
-            width: 44px;
-            height: 44px;
-            background: var(--blue-50);
+            width: 40px;
+            height: 40px;
             border-radius: 10px;
+            background: var(--sky);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 16px;
+            flex-shrink: 0;
         }
-        .dept-icon svg { color: var(--blue-700); }
+        .dept-icon svg { width: 20px; height: 20px; color: var(--blue); }
         .dept-card h3 {
-            font-size: 0.975rem;
+            font-size: 16px;
             font-weight: 700;
-            color: var(--gray-800);
-            margin-bottom: 10px;
+            color: var(--navy);
+            letter-spacing: -0.2px;
         }
-        .dept-card ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .dept-card li {
-            font-size: 0.875rem;
+        .dept-card p {
+            font-size: 14px;
             color: var(--gray-500);
-            padding-left: 18px;
-            position: relative;
-        }
-        .dept-card li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 8px;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--gray-300);
+            line-height: 1.6;
         }
 
-        /* ── BENEFITS ── */
+        /* === BENEFITS === */
+        .benefits {
+            padding: var(--section-pad) 0;
+            background: var(--sky-light);
+        }
         .benefits-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -404,764 +572,938 @@
         }
         .benefit-card {
             display: flex;
-            gap: 16px;
-            padding: 24px;
+            gap: 20px;
+            padding: 28px;
+            border-radius: 14px;
             background: var(--white);
             border: 1px solid var(--gray-200);
-            border-radius: 12px;
-            transition: box-shadow 0.2s;
+            transition: all 0.25s ease;
         }
-        .benefit-card:hover {
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
+        .benefit-card:hover { border-color: var(--blue-accent); box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
         .benefit-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--blue-50);
-            border-radius: 8px;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--sky);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
         }
-        .benefit-icon svg { color: var(--blue-700); }
-        .benefit-card h3 {
-            font-size: 0.95rem;
+        .benefit-icon svg { width: 22px; height: 22px; color: var(--blue-accent); }
+        .benefit-text h3 {
+            font-size: 16px;
             font-weight: 700;
-            color: var(--gray-800);
-            margin-bottom: 4px;
+            color: var(--navy);
+            margin-bottom: 6px;
+            letter-spacing: -0.2px;
         }
-        .benefit-card p {
-            font-size: 0.875rem;
+        .benefit-text p {
+            font-size: 14px;
             color: var(--gray-500);
-            line-height: 1.6;
+            line-height: 1.65;
         }
 
-        /* ── DASHBOARD ── */
-        .dashboard-mock {
-            background: var(--gray-100);
-            border: 2px dashed var(--gray-300);
-            border-radius: 14px;
-            padding: 80px 40px;
-            text-align: center;
-            max-width: 780px;
+        /* === DASHBOARD PREVIEW === */
+        .dashboard-preview {
+            padding: var(--section-pad) 0;
+            background: var(--white);
+        }
+        .dashboard-mockup {
+            background: var(--navy);
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 960px;
             margin: 0 auto;
+            box-shadow: 0 24px 80px rgba(11,29,53,0.2);
+            position: relative;
+            overflow: hidden;
         }
-        .dashboard-mock svg { margin-bottom: 16px; color: var(--gray-400); }
-        .dashboard-mock p {
+        .mockup-topbar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .mockup-dot:nth-child(1) { background: #FF5F56; }
+        .mockup-dot:nth-child(2) { background: #FFBD2E; }
+        .mockup-dot:nth-child(3) { background: #27C93F; }
+        .mockup-content {
+            background: var(--gray-100);
+            border-radius: 10px;
+            padding: 24px;
+            min-height: 320px;
+        }
+        .mockup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        .mockup-title {
+            font-weight: 700;
+            color: var(--navy);
+            font-size: 18px;
+        }
+        .mockup-filter {
+            display: flex;
+            gap: 8px;
+        }
+        .mockup-filter-btn {
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid var(--gray-200);
+            background: var(--white);
+            color: var(--gray-600);
+        }
+        .mockup-filter-btn.active {
+            background: var(--navy);
+            color: var(--white);
+            border-color: var(--navy);
+        }
+        .mockup-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 6px;
+        }
+        .mockup-table th {
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             color: var(--gray-400);
-            font-size: 0.925rem;
-            font-weight: 500;
+            padding: 0 12px 8px;
         }
-        .dashboard-caption {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.875rem;
-            color: var(--gray-500);
+        .mockup-table td {
+            padding: 12px;
+            background: var(--white);
+            font-size: 13px;
+            color: var(--gray-700);
         }
+        .mockup-table tr td:first-child { border-radius: 8px 0 0 8px; }
+        .mockup-table tr td:last-child { border-radius: 0 8px 8px 0; }
+        .mockup-status {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .mockup-status.new { background: #E3F2FD; color: #1565C0; }
+        .mockup-status.progress { background: #FFF3E0; color: #E65100; }
+        .mockup-status.done { background: #E8F5E9; color: #2E7D32; }
+        .mockup-priority { display: flex; align-items: center; gap: 6px; }
+        .mockup-priority-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .mockup-priority-dot.high { background: #E53935; }
+        .mockup-priority-dot.medium { background: #FB8C00; }
+        .mockup-priority-dot.low { background: #43A047; }
 
-        /* ── FAQ ── */
-        .faq-list {
-            max-width: 700px;
+        /* === FAQ === */
+        .faq {
+            padding: var(--section-pad) 0;
+            background: var(--sky-light);
+        }
+        .faq-grid {
+            max-width: 800px;
             margin: 0 auto;
         }
         .faq-item {
             border-bottom: 1px solid var(--gray-200);
         }
-        .faq-q {
-            width: 100%;
-            background: none;
-            border: none;
-            padding: 20px 0;
-            text-align: left;
-            cursor: pointer;
+        .faq-question {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 16px;
-            font-size: 0.975rem;
+            padding: 24px 0;
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-family: var(--font-body);
+            font-size: 17px;
             font-weight: 600;
-            color: var(--gray-800);
-            font-family: inherit;
-            line-height: 1.4;
-            transition: color 0.15s;
+            color: var(--navy);
+            letter-spacing: -0.2px;
+            gap: 20px;
         }
-        .faq-q:hover { color: var(--blue-700); }
-        .faq-chevron {
+        .faq-question:hover { color: var(--blue-accent); }
+        .faq-toggle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--sky);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
-            transition: transform 0.2s;
-            color: var(--gray-400);
+            transition: all 0.3s;
         }
-        .faq-item.open .faq-chevron { transform: rotate(180deg); }
-        .faq-a {
+        .faq-item.open .faq-toggle { background: var(--navy); transform: rotate(45deg); }
+        .faq-toggle svg { width: 14px; height: 14px; color: var(--navy); }
+        .faq-item.open .faq-toggle svg { color: var(--white); }
+        .faq-answer {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .faq-a-inner {
-            padding: 0 0 20px;
-            font-size: 0.925rem;
+        .faq-answer-inner {
+            padding: 0 0 24px;
+            font-size: 16px;
             color: var(--gray-500);
             line-height: 1.7;
         }
 
-        /* ── CONTACT ── */
-        .contact-section {
-            background: linear-gradient(168deg, #0f2744 0%, var(--blue-900) 100%);
+        /* === CTA === */
+        .cta-section {
+            padding: var(--section-pad) 0;
+            background: var(--navy);
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(46,125,209,0.12) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            right: -5%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(196,122,43,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .cta-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .cta-inner h2 {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 3.5vw, 44px);
             color: var(--white);
+            margin-bottom: 16px;
+            letter-spacing: -0.8px;
+            line-height: 1.15;
         }
-        .contact-section .section-title { color: var(--white); }
-        .contact-section .section-subtitle { color: rgba(255,255,255,0.65); }
-        .contact-section .section-label { color: rgba(255,255,255,0.4); }
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 56px;
-            align-items: start;
-        }
-        .contact-text h3 {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-        }
-        .contact-text p {
-            color: rgba(255,255,255,0.65);
-            font-size: 0.925rem;
+        .cta-inner p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 40px;
             line-height: 1.7;
-            margin-bottom: 28px;
         }
-        .phone-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--white);
-            text-decoration: none;
-            font-size: 1.05rem;
-            font-weight: 600;
-            padding: 12px 24px;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 8px;
-            transition: background 0.15s, border-color 0.15s;
+        .cta-form {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            text-align: left;
         }
-        .phone-link:hover {
-            background: rgba(255,255,255,0.08);
-            border-color: rgba(255,255,255,0.35);
-        }
-
-        .contact-form {
-            background: var(--white);
-            border-radius: 14px;
-            padding: 36px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-        }
-        .form-row {
+        .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px;
+            gap: 16px;
+            margin-bottom: 16px;
         }
-        .form-group { margin-bottom: 14px; }
-        .form-group.span-full { grid-column: 1 / -1; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group.full { grid-column: 1 / -1; }
         .form-group label {
-            display: block;
-            font-size: 0.825rem;
+            font-size: 13px;
             font-weight: 600;
-            color: var(--gray-700);
-            margin-bottom: 5px;
+            color: rgba(255,255,255,0.7);
+            letter-spacing: 0.2px;
         }
         .form-group input,
         .form-group select,
         .form-group textarea {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1px solid var(--gray-300);
-            border-radius: 7px;
-            font-size: 0.9rem;
-            font-family: inherit;
-            color: var(--gray-800);
-            background: var(--white);
-            transition: border-color 0.15s, box-shadow 0.15s;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.06);
+            color: var(--white);
+            font-family: var(--font-body);
+            font-size: 15px;
+            transition: border-color 0.2s;
+            outline: none;
         }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
         .form-group input:focus,
         .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--blue-500);
-            box-shadow: 0 0 0 3px rgba(49,130,206,0.1);
-        }
-        .form-group textarea { resize: vertical; min-height: 80px; }
+        .form-group textarea:focus { border-color: var(--blue-accent); }
+        .form-group select option { background: var(--navy); color: var(--white); }
+        .form-group textarea { resize: vertical; min-height: 100px; }
         .form-submit {
             width: 100%;
-            padding: 13px 24px;
-            background: var(--blue-900);
-            color: var(--white);
+            padding: 16px;
+            border-radius: 10px;
+            background: var(--white);
+            color: var(--navy);
+            font-family: var(--font-body);
+            font-size: 16px;
+            font-weight: 700;
             border: none;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: 600;
             cursor: pointer;
-            font-family: inherit;
-            transition: background 0.15s;
-            margin-top: 4px;
+            transition: all 0.2s;
+            letter-spacing: -0.2px;
         }
-        .form-submit:hover { background: var(--blue-700); }
-        .form-success {
+        .form-submit:hover { background: var(--sky); transform: translateY(-1px); }
+        .form-alt {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 15px;
+            color: rgba(255,255,255,0.5);
+        }
+        .form-alt a { color: var(--white); text-decoration: none; font-weight: 600; }
+        .form-alt a:hover { text-decoration: underline; }
+        #formSuccess {
             display: none;
             text-align: center;
-            padding: 48px 24px;
+            padding: 40px;
         }
-        .form-success svg { margin-bottom: 16px; }
-        .form-success h3 {
-            color: var(--gray-800);
-            font-size: 1.1rem;
-            margin-bottom: 8px;
+        #formSuccess h3 {
+            font-family: var(--font-display);
+            font-size: 28px;
+            color: var(--white);
+            margin-bottom: 12px;
         }
-        .form-success p {
-            color: var(--gray-500);
-            font-size: 0.925rem;
+        #formSuccess p {
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 0;
         }
 
-        /* ── FOOTER ── */
+        /* === FOOTER === */
         footer {
-            background: var(--gray-800);
-            color: var(--gray-400);
-            padding: 40px 0;
-            font-size: 0.85rem;
+            padding: 48px 0 32px;
+            background: var(--navy);
+            border-top: 1px solid rgba(255,255,255,0.06);
         }
-        .footer-top {
+        .footer-inner {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
+            gap: 40px;
             flex-wrap: wrap;
-            gap: 16px;
         }
         .footer-brand {
-            color: var(--gray-200);
-            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
         }
-        .footer-brand span {
-            display: block;
-            font-weight: 400;
-            color: var(--gray-500);
-            font-size: 0.8rem;
-            margin-top: 2px;
+        .footer-brand-text {
+            font-family: var(--font-display);
+            font-size: 20px;
+            color: var(--white);
         }
-        .footer-links { display: flex; gap: 24px; }
+        .footer-info {
+            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.7;
+        }
+        .footer-links { display: flex; gap: 32px; }
         .footer-links a {
-            color: var(--gray-400);
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
             text-decoration: none;
-            transition: color 0.15s;
+            transition: color 0.2s;
         }
-        .footer-links a:hover { color: var(--gray-200); }
+        .footer-links a:hover { color: var(--white); }
         .footer-bottom {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid var(--gray-700);
-            text-align: center;
-            color: var(--gray-500);
-            font-size: 0.8rem;
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            font-size: 13px;
+            color: rgba(255,255,255,0.3);
         }
 
-        /* ── RESPONSIVE ── */
-        @media (max-width: 768px) {
-            section { padding: 60px 0; }
-            .hero { padding: 116px 0 60px; }
-            .hero h1 { font-size: 2.1rem; }
-            .hero-sub { font-size: 1rem; }
-            .section-title { font-size: 1.65rem; }
-            .problems-grid,
-            .dept-grid { grid-template-columns: 1fr; }
+        /* === RESPONSIVE === */
+        @media (max-width: 900px) {
+            .problem-grid, .dept-grid { grid-template-columns: 1fr; }
             .benefits-grid { grid-template-columns: 1fr; }
-            .contact-grid { grid-template-columns: 1fr; gap: 36px; }
-            .form-row { grid-template-columns: 1fr; }
-            .nav-links {
-                display: none;
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+            .form-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .nav-mobile-toggle { display: block; }
+            nav.mobile-open .nav-links {
+                display: flex;
                 flex-direction: column;
                 position: absolute;
-                top: 64px;
+                top: 72px;
                 left: 0;
                 right: 0;
-                background: rgba(255,255,255,0.98);
-                backdrop-filter: blur(8px);
-                padding: 16px 24px 24px;
+                background: var(--white);
+                padding: 24px;
                 border-bottom: 1px solid var(--gray-200);
-                box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+                gap: 16px;
+                box-shadow: 0 12px 40px rgba(0,0,0,0.08);
             }
-            .nav-links.open { display: flex; }
-            .nav-hamburger { display: block; }
-            .hero-trust { flex-direction: column; gap: 10px; }
-            .footer-top { flex-direction: column; text-align: center; }
-        }
-
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .problems-grid { grid-template-columns: 1fr 1fr; }
-            .dept-grid { grid-template-columns: 1fr 1fr; }
+            .hero-trust { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .footer-inner { flex-direction: column; }
+            .mockup-table th:nth-child(4), .mockup-table td:nth-child(4),
+            .mockup-table th:nth-child(5), .mockup-table td:nth-child(5) { display: none; }
         }
     </style>
 </head>
 <body>
 
-<!-- ── NAV ── -->
+<!-- NAV -->
 <nav id="nav">
-    <div class="container nav-inner">
-        <a href="#" class="nav-logo">BürgerDirekt</a>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#problem">Herausforderung</a></li>
-            <li><a href="#ablauf">Ablauf</a></li>
-            <li><a href="#vorteile">Vorteile</a></li>
-            <li><a href="#faq">FAQ</a></li>
-            <li><a href="#kontakt" class="nav-cta-link">Beratung anfragen</a></li>
-        </ul>
-        <button class="nav-hamburger" id="hamburger" aria-label="Menü öffnen">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+    <div class="nav-inner">
+        <a href="#" class="nav-logo">
+            <div class="nav-logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <span class="nav-logo-text">BürgerDirekt</span>
+        </a>
+        <div class="nav-links" id="navLinks">
+            <a href="#problem">Herausforderung</a>
+            <a href="#how">Ablauf</a>
+            <a href="#benefits">Vorteile</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact" class="nav-cta">Beratungstermin</a>
+        </div>
+        <button class="nav-mobile-toggle" onclick="document.getElementById('nav').classList.toggle('mobile-open')" aria-label="Menü">
+            <span></span><span></span><span></span>
         </button>
     </div>
 </nav>
 
-<!-- ── HERO ── -->
-<section class="hero">
+<!-- HERO -->
+<section class="hero" id="hero">
     <div class="container">
-        <div class="hero-content">
-            <h1>Kein Bürgeranruf geht mehr verloren.</h1>
-            <p class="hero-sub">BürgerDirekt nimmt Anrufe außerhalb der Sprechzeiten entgegen und erfasst Bürgeranliegen automatisch per SMS-Formular – strukturiert, nachvollziehbar, ohne zusätzliches Personal.</p>
-            <a href="#kontakt" class="btn-primary">Kostenlose Beratung für Ihre Kommune</a>
-            <div class="hero-trust">
-                <div class="trust-item">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    DSGVO-konform
-                </div>
-                <div class="trust-item">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-                    Deutsche Server
-                </div>
-                <div class="trust-item">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                    Keine Installation nötig
-                </div>
+        <div class="hero-badge">Für Kommunen & Gemeinden</div>
+        <h1>Kein Bürgeranruf geht mehr <em>verloren.</em></h1>
+        <p class="hero-sub">BürgerDirekt erfasst Anliegen automatisch per Telefon und SMS-Formular&nbsp;– strukturiert, nachvollziehbar, rund um die Uhr. Ohne IT-Projekt, ohne Mehraufwand.</p>
+        <div class="hero-actions">
+            <a href="#contact" class="btn-primary">
+                Kostenlose Beratung
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#how" class="btn-secondary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
+                So funktioniert's
+            </a>
+        </div>
+        <div class="hero-trust">
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                DSGVO-konform
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Deutsche Server
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Einsatzbereit in 2 Wochen
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                Keine Installation nötig
             </div>
         </div>
     </div>
 </section>
 
-<!-- ── PROBLEM ── -->
-<section id="problem" class="section-alt">
+<!-- PROBLEM -->
+<section class="problem" id="problem">
     <div class="container">
-        <div class="section-label">Das Problem</div>
-        <h2 class="section-title">Kennen Sie das?</h2>
-        <p class="section-subtitle">Kommunalverwaltungen stehen vor denselben Problemen – unabhängig von ihrer Größe.</p>
-        <div class="problems-grid">
-            <div class="problem-card">
+        <div class="section-label reveal">Die Herausforderung</div>
+        <h2 class="section-title reveal reveal-delay-1">Kennen Sie das?</h2>
+        <p class="section-desc reveal reveal-delay-2">Drei Situationen, die in fast jeder Kommune zum Alltag gehören&nbsp;– und die Bürger und Mitarbeiter gleichermaßen frustrieren.</p>
+        <div class="problem-grid">
+            <div class="problem-card reveal reveal-delay-1">
                 <div class="problem-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/><line x1="4" y1="2" x2="20" y2="22" stroke="#e53e3e" stroke-width="2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/><line x1="1" y1="1" x2="23" y2="23" stroke-width="2.5"/></svg>
                 </div>
                 <h3>Anrufe gehen ins Leere</h3>
-                <p>Außerhalb der Sprechzeiten, in der Mittagspause, bei Krankenstand: Bürger erreichen niemanden. Frust, Beschwerden, Leserbriefe.</p>
+                <p>Außerhalb der Sprechzeiten, in der Mittagspause, bei Krankenstand: Bürger erreichen niemanden. Frust und Beschwerden häufen sich&nbsp;– die Meinung über die Erreichbarkeit leidet.</p>
             </div>
-            <div class="problem-card">
+            <div class="problem-card reveal reveal-delay-2">
                 <div class="problem-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#C47A2B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 </div>
                 <h3>Routinefragen binden Personal</h3>
-                <p>Öffnungszeiten, Terminbuchung, welche Dokumente mitbringen. Immer die gleichen Fragen, jeden Tag. Ihre Mitarbeiter kommen nicht zur eigentlichen Arbeit.</p>
+                <p>Öffnungszeiten, Terminbuchung, welche Dokumente mitbringen&nbsp;– immer die gleichen Fragen. Ihre Mitarbeiter verbringen bis zu 60% ihrer Zeit damit statt mit Sachbearbeitung.</p>
             </div>
-            <div class="problem-card">
+            <div class="problem-card reveal reveal-delay-3">
                 <div class="problem-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e53e3e" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
                 </div>
                 <h3>Anliegen verschwinden</h3>
-                <p>Mündliche Weitergabe, Notizzettel, vergessene Rückrufe. Nach drei Wochen fragt der Bürger: „Was ist mit meinem Schlagloch?"</p>
+                <p>Mündliche Weitergabe, Notizzettel, vergessene Rückrufe. Nach drei Wochen fragt der Bürger: „Was ist eigentlich mit meinem Schlagloch passiert?"</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ── HOW IT WORKS ── -->
-<section id="ablauf">
-    <div class="container centered">
-        <div class="section-label">Der Ablauf</div>
-        <h2 class="section-title">So funktioniert BürgerDirekt</h2>
-        <p class="section-subtitle">Vom verpassten Anruf bis zur erledigten Meldung – in wenigen Schritten.</p>
-    </div>
+<!-- STATS -->
+<section class="stats-band">
     <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item reveal">
+                <div class="stat-number" data-target="40">40%</div>
+                <div class="stat-label">aller Anrufe werden in Verwaltungen nicht angenommen</div>
+            </div>
+            <div class="stat-item reveal reveal-delay-1">
+                <div class="stat-number">60%</div>
+                <div class="stat-label">der Arbeitszeit geht für Routinefragen am Telefon verloren</div>
+            </div>
+            <div class="stat-item reveal reveal-delay-2">
+                <div class="stat-number">11.000+</div>
+                <div class="stat-label">Kommunen in Deutschland mit gleichen Herausforderungen</div>
+            </div>
+            <div class="stat-item reveal reveal-delay-3">
+                <div class="stat-number">2 Wo.</div>
+                <div class="stat-label">bis BürgerDirekt in Ihrer Kommune einsatzbereit ist</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how">
+    <div class="container">
+        <div class="text-center" style="margin-bottom: 56px;">
+            <div class="section-label reveal">Der Ablauf</div>
+            <h2 class="section-title reveal reveal-delay-1">So funktioniert BürgerDirekt</h2>
+            <p class="section-desc reveal reveal-delay-2" style="margin: 0 auto;">Vom verpassten Anruf zum dokumentierten Anliegen&nbsp;– in unter zwei Minuten. Ohne App, ohne Registrierung.</p>
+        </div>
         <div class="steps-container">
-            <div class="step">
-                <div class="step-rail">
-                    <div class="step-dot">1</div>
+            <div class="step reveal">
+                <div class="step-indicator">
+                    <div class="step-number">1</div>
                     <div class="step-line"></div>
                 </div>
-                <div class="step-body">
-                    <h3>Anruf geht ein</h3>
-                    <p>Ein Bürger ruft an, niemand ist erreichbar – oder ein Mitarbeiter leitet den Anruf gezielt weiter.</p>
+                <div class="step-content">
+                    <h3>Bürger ruft an</h3>
+                    <p>Ein Bürger ruft bei der Kommune an. Ist niemand erreichbar&nbsp;– oder ein Mitarbeiter leitet gezielt weiter&nbsp;– greift BürgerDirekt.</p>
                 </div>
             </div>
-            <div class="step">
-                <div class="step-rail">
-                    <div class="step-dot">2</div>
+            <div class="step reveal reveal-delay-1">
+                <div class="step-indicator">
+                    <div class="step-number">2</div>
                     <div class="step-line"></div>
                 </div>
-                <div class="step-body">
-                    <h3>Automatische Ansage</h3>
-                    <p>Eine professionelle Bandansage informiert den Bürger: Sein Anliegen wird aufgenommen, er erhält gleich eine SMS.</p>
+                <div class="step-content">
+                    <h3>Professionelle Ansage</h3>
+                    <p>Eine automatische Bandansage informiert den Bürger: Sein Anliegen wird aufgenommen, er erhält gleich eine SMS.</p>
+                    <span class="step-highlight">Ihre bestehende Nummer bleibt erhalten</span>
                 </div>
             </div>
-            <div class="step">
-                <div class="step-rail">
-                    <div class="step-dot">3</div>
+            <div class="step reveal reveal-delay-2">
+                <div class="step-indicator">
+                    <div class="step-number">3</div>
                     <div class="step-line"></div>
                 </div>
-                <div class="step-body">
+                <div class="step-content">
                     <h3>SMS mit Formular-Link</h3>
-                    <p>Der Bürger bekommt eine SMS mit einem Link zum Anliegen-Formular. Direkt auf dem Handy, kein App-Download nötig.</p>
+                    <p>Der Bürger erhält eine SMS mit einem Link zum digitalen Anliegen-Formular. Direkt auf dem Handy, kein App-Download nötig.</p>
                 </div>
             </div>
-            <div class="step">
-                <div class="step-rail">
-                    <div class="step-dot">4</div>
+            <div class="step reveal reveal-delay-3">
+                <div class="step-indicator">
+                    <div class="step-number">4</div>
                     <div class="step-line"></div>
                 </div>
-                <div class="step-body">
-                    <h3>Bürger beschreibt sein Anliegen</h3>
-                    <p>Kategorie wählen (Straßenschaden, Grünfläche, Ordnung...), Beschreibung eingeben, Foto hochladen, Ort angeben.</p>
+                <div class="step-content">
+                    <h3>Anliegen beschreiben</h3>
+                    <p>Der Bürger wählt eine Kategorie, beschreibt das Problem, lädt ein Foto hoch und gibt den Ort an. Strukturiert und vollständig.</p>
+                    <span class="step-highlight">Text, Foto, Kategorie, Ort</span>
                 </div>
             </div>
-            <div class="step">
-                <div class="step-rail">
-                    <div class="step-dot">5</div>
+            <div class="step reveal reveal-delay-4">
+                <div class="step-indicator">
+                    <div class="step-number">5</div>
                     <div class="step-line"></div>
                 </div>
-                <div class="step-body">
-                    <h3>Anliegen im Dashboard</h3>
-                    <p>Das Anliegen erscheint sofort im Dashboard der zuständigen Abteilung. Sortiert, priorisiert, nachverfolgbar.</p>
+                <div class="step-content">
+                    <h3>Dashboard der Abteilung</h3>
+                    <p>Das Anliegen erscheint sofort im Dashboard der zuständigen Abteilung&nbsp;– sortiert nach Dringlichkeit, nachverfolgbar, dokumentiert.</p>
                 </div>
             </div>
-            <div class="step">
-                <div class="step-rail">
-                    <div class="step-dot">6</div>
-                    <div class="step-line"></div>
+            <div class="step reveal">
+                <div class="step-indicator">
+                    <div class="step-number">6</div>
                 </div>
-                <div class="step-body">
-                    <h3>Bearbeitung und Rückmeldung</h3>
-                    <p>Die Abteilung bearbeitet das Anliegen. Der Bürger kann jederzeit den Status abfragen.</p>
+                <div class="step-content">
+                    <h3>Bearbeitung & Rückmeldung</h3>
+                    <p>Die Abteilung bearbeitet das Anliegen und aktualisiert den Status. Der Bürger kann jederzeit nachfragen&nbsp;– und bekommt eine Antwort.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ── DEPARTMENTS ── -->
-<section id="abteilungen" class="section-alt">
-    <div class="container centered">
-        <div class="section-label">Einsatzbereiche</div>
-        <h2 class="section-title">Ein System für alle Abteilungen</h2>
-        <p class="section-subtitle">Jede Abteilung erhält nur die Anliegen, die sie betreffen – in ihrem eigenen Dashboard.</p>
-    </div>
+<!-- DEPARTMENTS -->
+<section class="departments" id="departments">
     <div class="container">
+        <div class="text-center" style="margin-bottom: 48px;">
+            <div class="section-label reveal">Einsatzbereiche</div>
+            <h2 class="section-title reveal reveal-delay-1">Ein System für alle Abteilungen</h2>
+            <p class="section-desc reveal reveal-delay-2" style="margin: 0 auto;">Jede Abteilung erhält ihr eigenes Dashboard und sieht ausschließlich die Anliegen, die sie betreffen.</p>
+        </div>
         <div class="dept-grid">
-            <div class="dept-card">
-                <div class="dept-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 21h18"/><path d="M5 21V7l8-4 8 4v14"/><path d="M9 21v-6h6v6"/></svg>
+            <div class="dept-card reveal">
+                <div class="dept-card-header">
+                    <div class="dept-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11"/></svg>
+                    </div>
+                    <h3>Tiefbau & Straßen</h3>
                 </div>
-                <h3>Tiefbau &amp; Straßen</h3>
-                <ul>
-                    <li>Schlaglöcher</li>
-                    <li>Defekte Laternen</li>
-                    <li>Gehwegschäden</li>
-                </ul>
+                <p>Schlaglöcher, defekte Straßenlaternen, Gehwegschäden, Fahrbahnmarkierungen</p>
             </div>
-            <div class="dept-card">
-                <div class="dept-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22c-4 0-8-2-8-6V8c0-4 4-6 8-6s8 2 8 6v8c0 4-4 6-8 6z"/><path d="M12 2v20"/><path d="M4 8c2 1 5 2 8 2s6-1 8-2"/></svg>
+            <div class="dept-card reveal reveal-delay-1">
+                <div class="dept-card-header">
+                    <div class="dept-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c-4.97 0-9-2.24-9-5v-4c0-2.76 4.03-5 9-5s9 2.24 9 5v4c0 2.76-4.03 5-9 5z"/><path d="M12 2L8 8h8L12 2z"/></svg>
+                    </div>
+                    <h3>Grünflächen</h3>
                 </div>
-                <h3>Grünflächen</h3>
-                <ul>
-                    <li>Baumschäden</li>
-                    <li>Spielplätze</li>
-                    <li>Grünschnitt</li>
-                </ul>
+                <p>Baumschäden, Spielplatzmängel, Grünschnitt, Unkraut auf öffentlichen Wegen</p>
             </div>
-            <div class="dept-card">
-                <div class="dept-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div class="dept-card reveal reveal-delay-2">
+                <div class="dept-card-header">
+                    <div class="dept-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3>Ordnungsamt</h3>
                 </div>
-                <h3>Ordnungsamt</h3>
-                <ul>
-                    <li>Ruhestörung</li>
-                    <li>Falschparker</li>
-                    <li>Wilde Müllentsorgung</li>
-                </ul>
+                <p>Ruhestörung, Falschparker, wilde Müllentsorgung, Verstöße im öffentlichen Raum</p>
             </div>
-            <div class="dept-card">
-                <div class="dept-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            <div class="dept-card reveal reveal-delay-1">
+                <div class="dept-card-header">
+                    <div class="dept-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                    </div>
+                    <h3>Bürgeramt</h3>
                 </div>
-                <h3>Bürgeramt</h3>
-                <ul>
-                    <li>Terminbuchung</li>
-                    <li>Öffnungszeiten</li>
-                    <li>Dokumentenlisten</li>
-                </ul>
+                <p>Terminbuchung, Öffnungszeiten, benötigte Dokumente, allgemeine Verwaltungsfragen</p>
             </div>
-            <div class="dept-card">
-                <div class="dept-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+            <div class="dept-card reveal reveal-delay-2">
+                <div class="dept-card-header">
+                    <div class="dept-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <h3>Abfallwirtschaft</h3>
                 </div>
-                <h3>Abfallwirtschaft</h3>
-                <ul>
-                    <li>Tonnenbestellung</li>
-                    <li>Sperrmüll</li>
-                    <li>Containerprobleme</li>
-                </ul>
+                <p>Tonnenbestellung, Sperrmüll, überfüllte Container, Abholtermine</p>
             </div>
-            <div class="dept-card">
-                <div class="dept-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            <div class="dept-card reveal reveal-delay-3">
+                <div class="dept-card-header">
+                    <div class="dept-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h3>Stadtwerke</h3>
                 </div>
-                <h3>Stadtwerke</h3>
-                <ul>
-                    <li>Rohrbrüche</li>
-                    <li>Störungen</li>
-                    <li>Zählerstand</li>
-                </ul>
+                <p>Rohrbrüche, Störungsmeldungen, Zählerstand, Versorgungsausfälle</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ── BENEFITS ── -->
-<section id="vorteile">
-    <div class="container centered">
-        <div class="section-label">Ihre Vorteile</div>
-        <h2 class="section-title">Was Ihre Kommune davon hat</h2>
-        <p class="section-subtitle">Praktischer Nutzen, kein Marketingversprechen.</p>
-    </div>
+<!-- BENEFITS -->
+<section class="benefits" id="benefits">
     <div class="container">
+        <div class="text-center" style="margin-bottom: 48px;">
+            <div class="section-label reveal">Vorteile</div>
+            <h2 class="section-title reveal reveal-delay-1">Was Ihre Kommune davon hat</h2>
+        </div>
         <div class="benefits-grid">
-            <div class="benefit-card">
+            <div class="benefit-card reveal">
                 <div class="benefit-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 </div>
-                <div>
-                    <h3>24/7 Erreichbarkeit</h3>
-                    <p>Anrufe werden auch nachts, am Wochenende und bei Krankenstand erfasst.</p>
+                <div class="benefit-text">
+                    <h3>24/7 erreichbar</h3>
+                    <p>Anrufe werden auch nachts, am Wochenende und bei Personalengpass erfasst. Kein Anruf geht mehr unbeantwortet.</p>
                 </div>
             </div>
-            <div class="benefit-card">
+            <div class="benefit-card reveal reveal-delay-1">
                 <div class="benefit-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="23 6 23 12 17 12"/></svg>
                 </div>
-                <div>
-                    <h3>Mitarbeiter-Entlastung</h3>
-                    <p>Weniger Routineanrufe, mehr Zeit für Beratung und Sachbearbeitung.</p>
+                <div class="benefit-text">
+                    <h3>Mitarbeiter entlasten</h3>
+                    <p>Weniger Routineanrufe, mehr Zeit für persönliche Beratung und Sachbearbeitung. Ihre Mitarbeiter können sich auf das Wesentliche konzentrieren.</p>
                 </div>
             </div>
-            <div class="benefit-card">
+            <div class="benefit-card reveal reveal-delay-1">
                 <div class="benefit-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="16 13 12 17 8 13"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="16 13 12 17 8 13"/></svg>
                 </div>
-                <div>
+                <div class="benefit-text">
                     <h3>Nichts geht verloren</h3>
-                    <p>Jedes Anliegen wird digital erfasst, dokumentiert und ist nachverfolgbar.</p>
+                    <p>Jedes Anliegen wird digital erfasst, dokumentiert und ist nachverfolgbar. Schluss mit Zetteln und vergessenen Rückrufen.</p>
                 </div>
             </div>
-            <div class="benefit-card">
+            <div class="benefit-card reveal reveal-delay-2">
                 <div class="benefit-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                 </div>
-                <div>
+                <div class="benefit-text">
                     <h3>Bürger fühlen sich gehört</h3>
-                    <p>Sofortige Bestätigung per SMS, transparenter Status.</p>
+                    <p>Sofortige Bestätigung per SMS, transparenter Bearbeitungsstatus. Bürgerzufriedenheit steigt messbar.</p>
                 </div>
             </div>
-            <div class="benefit-card">
+            <div class="benefit-card reveal reveal-delay-2">
                 <div class="benefit-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                 </div>
-                <div>
+                <div class="benefit-text">
                     <h3>Kein IT-Projekt</h3>
-                    <p>Keine Server, keine Software-Installation, keine Schulung. Läuft innerhalb von 2 Wochen.</p>
+                    <p>Keine Server, keine Software-Installation, keine Schulung nötig. BürgerDirekt wird als Weiterleitung hinter Ihre Nummer geschaltet.</p>
                 </div>
             </div>
-            <div class="benefit-card">
+            <div class="benefit-card reveal reveal-delay-3">
                 <div class="benefit-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
-                <div>
-                    <h3>Barrierefreiheit</h3>
-                    <p>Funktioniert per Telefon und SMS – auch für Menschen ohne App oder Internet-Zugang.</p>
-                </div>
-            </div>
-            <div class="benefit-card">
-                <div class="benefit-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                </div>
-                <div>
+                <div class="benefit-text">
                     <h3>DSGVO-konform</h3>
-                    <p>Alle Daten auf europäischen Servern, Auftragsverarbeitungsvertrag inklusive.</p>
+                    <p>Alle Daten auf europäischen Servern. Auftragsverarbeitungsvertrag inklusive. Keine Datenweitergabe an Dritte.</p>
                 </div>
             </div>
-            <div class="benefit-card">
+            <div class="benefit-card reveal reveal-delay-3">
                 <div class="benefit-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3"/><path d="M15 2h7v7"/></svg>
                 </div>
-                <div>
+                <div class="benefit-text">
+                    <h3>Barrierefrei</h3>
+                    <p>Funktioniert per Telefon und SMS&nbsp;– auch für Menschen ohne Smartphone-App oder schnelles Internet.</p>
+                </div>
+            </div>
+            <div class="benefit-card reveal reveal-delay-4">
+                <div class="benefit-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                </div>
+                <div class="benefit-text">
                     <h3>Günstiger als Personal</h3>
-                    <p>Bruchteil der Kosten einer halben Stelle.</p>
+                    <p>Für den Bruchteil der Kosten einer halben Stelle. Skaliert mit Ihrer Kommune&nbsp;– von 1.000 bis 500.000 Einwohner.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ── DASHBOARD ── -->
-<section class="section-alt">
-    <div class="container centered">
-        <div class="section-label">Einblick</div>
-        <h2 class="section-title">Das BürgerDirekt Dashboard</h2>
-        <p class="section-subtitle">Alle Anliegen auf einen Blick – sortiert nach Abteilung und Dringlichkeit.</p>
-        <div class="dashboard-mock">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            <p>Screenshot folgt</p>
+<!-- DASHBOARD PREVIEW -->
+<section class="dashboard-preview" id="dashboard">
+    <div class="container">
+        <div class="text-center" style="margin-bottom: 48px;">
+            <div class="section-label reveal">Dashboard</div>
+            <h2 class="section-title reveal reveal-delay-1">Alle Anliegen im Blick</h2>
+            <p class="section-desc reveal reveal-delay-2" style="margin: 0 auto;">Jede Abteilung sieht nur ihre Anliegen&nbsp;– sortiert nach Dringlichkeit, mit vollständigem Status-Tracking.</p>
         </div>
-        <p class="dashboard-caption">Jede Abteilung sieht nur ihre Anliegen – sortiert nach Dringlichkeit, mit Status-Tracking.</p>
+        <div class="dashboard-mockup reveal">
+            <div class="mockup-topbar">
+                <div class="mockup-dot"></div>
+                <div class="mockup-dot"></div>
+                <div class="mockup-dot"></div>
+            </div>
+            <div class="mockup-content">
+                <div class="mockup-header">
+                    <div class="mockup-title">Tiefbau & Straßen — 12 offene Anliegen</div>
+                    <div class="mockup-filter">
+                        <div class="mockup-filter-btn active">Alle</div>
+                        <div class="mockup-filter-btn">Offen</div>
+                        <div class="mockup-filter-btn">In Bearbeitung</div>
+                    </div>
+                </div>
+                <table class="mockup-table">
+                    <thead>
+                        <tr>
+                            <th>Anliegen</th>
+                            <th>Ort</th>
+                            <th>Status</th>
+                            <th>Priorität</th>
+                            <th>Datum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Großes Schlagloch</strong></td>
+                            <td>Berliner Str. 42</td>
+                            <td><span class="mockup-status new">Neu</span></td>
+                            <td><div class="mockup-priority"><div class="mockup-priority-dot high"></div> Hoch</div></td>
+                            <td>Heute, 09:14</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gehwegplatten lose</strong></td>
+                            <td>Am Markt 7</td>
+                            <td><span class="mockup-status progress">In Bearbeitung</span></td>
+                            <td><div class="mockup-priority"><div class="mockup-priority-dot medium"></div> Mittel</div></td>
+                            <td>Gestern</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Straßenlaterne defekt</strong></td>
+                            <td>Potsdamer Allee 15</td>
+                            <td><span class="mockup-status done">Erledigt</span></td>
+                            <td><div class="mockup-priority"><div class="mockup-priority-dot low"></div> Normal</div></td>
+                            <td>11.03.2026</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fahrbahnschaden nach Frost</strong></td>
+                            <td>Hauptstraße 3</td>
+                            <td><span class="mockup-status new">Neu</span></td>
+                            <td><div class="mockup-priority"><div class="mockup-priority-dot medium"></div> Mittel</div></td>
+                            <td>10.03.2026</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </section>
 
-<!-- ── FAQ ── -->
-<section id="faq">
-    <div class="container centered">
-        <div class="section-label">Häufige Fragen</div>
-        <h2 class="section-title">FAQ</h2>
-        <p class="section-subtitle">Antworten auf die häufigsten Fragen von Kommunalverantwortlichen.</p>
-    </div>
+<!-- FAQ -->
+<section class="faq" id="faq">
     <div class="container">
-        <div class="faq-list">
-            <div class="faq-item">
-                <button class="faq-q">
+        <div class="text-center" style="margin-bottom: 48px;">
+            <div class="section-label reveal">Häufige Fragen</div>
+            <h2 class="section-title reveal reveal-delay-1">Gut zu wissen</h2>
+        </div>
+        <div class="faq-grid">
+            <div class="faq-item reveal">
+                <button class="faq-question" onclick="toggleFaq(this)">
                     Wie funktioniert BürgerDirekt genau?
-                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    <div class="faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
                 </button>
-                <div class="faq-a"><div class="faq-a-inner">Bei einem verpassten Anruf wird automatisch eine SMS mit einem Formular-Link versendet. Der Bürger beschreibt sein Anliegen digital – mit Text, Foto und Kategorie. Das Anliegen erscheint sofort im Dashboard der zuständigen Abteilung.</div></div>
+                <div class="faq-answer"><div class="faq-answer-inner">Bei einem verpassten Anruf wird automatisch eine SMS mit einem Formular-Link versendet. Der Bürger beschreibt sein Anliegen digital&nbsp;– mit Text, Foto und Kategorie. Das Anliegen erscheint sofort im Dashboard der zuständigen Abteilung.</div></div>
             </div>
-            <div class="faq-item">
-                <button class="faq-q">
+            <div class="faq-item reveal">
+                <button class="faq-question" onclick="toggleFaq(this)">
                     Brauchen wir neue Telefonnummern?
-                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    <div class="faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
                 </button>
-                <div class="faq-a"><div class="faq-a-inner">Nein. BürgerDirekt wird als Weiterleitung hinter Ihre bestehende Nummer geschaltet. Für Bürger ändert sich nichts.</div></div>
+                <div class="faq-answer"><div class="faq-answer-inner">Nein. BürgerDirekt wird als Weiterleitung hinter Ihre bestehende Nummer geschaltet. Für Bürger ändert sich nichts.</div></div>
             </div>
-            <div class="faq-item">
-                <button class="faq-q">
+            <div class="faq-item reveal">
+                <button class="faq-question" onclick="toggleFaq(this)">
                     Wie schnell ist das einsatzbereit?
-                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    <div class="faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
                 </button>
-                <div class="faq-a"><div class="faq-a-inner">Innerhalb von 2 Wochen. Keine Installation, keine Hardware, keine IT-Abteilung nötig.</div></div>
+                <div class="faq-answer"><div class="faq-answer-inner">Innerhalb von zwei Wochen. Keine Installation, keine Hardware, keine IT-Abteilung nötig. Wir richten alles für Sie ein.</div></div>
             </div>
-            <div class="faq-item">
-                <button class="faq-q">
+            <div class="faq-item reveal">
+                <button class="faq-question" onclick="toggleFaq(this)">
                     Ist das DSGVO-konform?
-                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    <div class="faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
                 </button>
-                <div class="faq-a"><div class="faq-a-inner">Ja. Alle Daten werden auf europäischen Servern verarbeitet und gespeichert. Ein Auftragsverarbeitungsvertrag (AVV) ist selbstverständlich inklusive.</div></div>
+                <div class="faq-answer"><div class="faq-answer-inner">Ja. Alle Daten werden auf europäischen Servern verarbeitet. Auftragsverarbeitungsvertrag (AVV) ist inklusive. Keine Datenweitergabe an Dritte.</div></div>
             </div>
-            <div class="faq-item">
-                <button class="faq-q">
+            <div class="faq-item reveal">
+                <button class="faq-question" onclick="toggleFaq(this)">
                     Was kostet BürgerDirekt?
-                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    <div class="faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
                 </button>
-                <div class="faq-a"><div class="faq-a-inner">Die Kosten richten sich nach Einwohnerzahl und Umfang. Kontaktieren Sie uns für ein individuelles Angebot – die Erstberatung ist kostenlos.</div></div>
+                <div class="faq-answer"><div class="faq-answer-inner">Die Kosten richten sich nach Einwohnerzahl und Umfang der gewünschten Abteilungen. Kontaktieren Sie uns für ein individuelles Angebot&nbsp;– die Beratung ist kostenlos.</div></div>
             </div>
-            <div class="faq-item">
-                <button class="faq-q">
+            <div class="faq-item reveal">
+                <button class="faq-question" onclick="toggleFaq(this)">
                     Funktioniert das auch für kleine Gemeinden?
-                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    <div class="faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
                 </button>
-                <div class="faq-a"><div class="faq-a-inner">Ja. BürgerDirekt skaliert von der kleinen Gemeinde bis zur Großstadt. Gerade kleine Verwaltungen mit wenig Personal profitieren besonders.</div></div>
+                <div class="faq-answer"><div class="faq-answer-inner">Ja. BürgerDirekt skaliert von der kleinen Gemeinde mit 1.000 Einwohnern bis zur Großstadt. Gerade für kleinere Verwaltungen mit begrenztem Personal ist die Entlastung am größten.</div></div>
             </div>
-            <div class="faq-item">
-                <button class="faq-q">
+            <div class="faq-item reveal">
+                <button class="faq-question" onclick="toggleFaq(this)">
                     Was ist mit älteren Bürgern ohne Smartphone?
-                    <svg class="faq-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    <div class="faq-toggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
                 </button>
-                <div class="faq-a"><div class="faq-a-inner">Die Bandansage informiert auch ohne SMS über den weiteren Ablauf. Zusätzlich können Mitarbeiter Anliegen jederzeit manuell ins Dashboard eintragen.</div></div>
+                <div class="faq-answer"><div class="faq-answer-inner">Die Bandansage informiert auch ohne SMS über die nächsten Schritte. Zusätzlich können Mitarbeiter Anliegen jederzeit manuell ins Dashboard eintragen. Kein Bürger wird ausgeschlossen.</div></div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ── CONTACT ── -->
-<section id="kontakt" class="contact-section">
+<!-- CTA -->
+<section class="cta-section" id="contact">
     <div class="container">
-        <div class="section-label">Kontakt</div>
-        <h2 class="section-title">Lassen Sie sich unverbindlich beraten</h2>
-        <p class="section-subtitle">Wir zeigen Ihnen in 30 Minuten, wie BürgerDirekt in Ihrer Kommune funktionieren kann.</p>
-        <div class="contact-grid">
-            <div class="contact-text">
-                <h3>Persönliche Beratung</h3>
-                <p>Wir kennen die Herausforderungen kommunaler Verwaltungen. In einem kurzen Gespräch klären wir, ob und wie BürgerDirekt in Ihrer Kommune eingesetzt werden kann – unverbindlich und kostenlos.</p>
-                <a href="tel:+491631692010" class="phone-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-                    0163 1692010
-                </a>
-            </div>
-            <div>
-                <form class="contact-form" id="contactForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="anrede">Anrede</label>
-                            <select id="anrede" name="anrede" required>
-                                <option value="">Bitte wählen</option>
-                                <option value="Herr">Herr</option>
-                                <option value="Frau">Frau</option>
-                                <option value="Divers">Divers</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" placeholder="Max Mustermann" required>
-                        </div>
+        <div class="cta-inner">
+            <h2>Lassen Sie sich unverbindlich beraten</h2>
+            <p>Wir zeigen Ihnen in 30 Minuten, wie BürgerDirekt in Ihrer Kommune funktionieren kann.</p>
+            <form class="cta-form" id="contactForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="anrede">Anrede</label>
+                        <select id="anrede" name="anrede">
+                            <option value="">Bitte wählen</option>
+                            <option value="Herr">Herr</option>
+                            <option value="Frau">Frau</option>
+                            <option value="Divers">Divers</option>
+                        </select>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="kommune">Kommune / Stadt</label>
-                            <input type="text" id="kommune" name="kommune" placeholder="Stadt Musterstadt" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="position">Position</label>
-                            <input type="text" id="position" name="position" placeholder="z.B. Bürgermeister">
-                        </div>
+                    <div class="form-group">
+                        <label for="name">Name *</label>
+                        <input type="text" id="name" name="name" placeholder="Ihr vollständiger Name" required>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="email">E-Mail</label>
-                            <input type="email" id="email" name="email" placeholder="max@musterstadt.de" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="telefon">Telefon</label>
-                            <input type="tel" id="telefon" name="telefon" placeholder="+49 ...">
-                        </div>
+                    <div class="form-group">
+                        <label for="kommune">Kommune / Stadt *</label>
+                        <input type="text" id="kommune" name="kommune" placeholder="Name Ihrer Kommune" required>
                     </div>
-                    <div class="form-group span-full">
+                    <div class="form-group">
+                        <label for="position">Position</label>
+                        <input type="text" id="position" name="position" placeholder="z.B. Bürgermeister, Hauptamtsleiter">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-Mail *</label>
+                        <input type="email" id="email" name="email" placeholder="ihre@kommune.de" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefon">Telefon</label>
+                        <input type="tel" id="telefon" name="telefon" placeholder="+49">
+                    </div>
+                    <div class="form-group full">
                         <label for="nachricht">Nachricht (optional)</label>
-                        <textarea id="nachricht" name="nachricht" placeholder="Erzählen Sie uns kurz von Ihrer Kommune ..."></textarea>
+                        <textarea id="nachricht" name="nachricht" placeholder="Wie können wir Ihnen helfen?"></textarea>
                     </div>
-                    <button type="submit" class="form-submit">Beratungstermin vereinbaren</button>
-                </form>
-                <div class="form-success" id="formSuccess">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#38a169" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 16 10"/></svg>
-                    <h3>Vielen Dank für Ihre Anfrage</h3>
-                    <p>Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
                 </div>
+                <button type="submit" class="form-submit">Beratungstermin vereinbaren</button>
+            </form>
+            <div id="formSuccess">
+                <h3>Vielen Dank!</h3>
+                <p>Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
+            </div>
+            <div class="form-alt">
+                Oder rufen Sie uns direkt an: <a href="tel:+491631692010">0163 169 2010</a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ── FOOTER ── -->
+<!-- FOOTER -->
 <footer>
     <div class="container">
-        <div class="footer-top">
-            <div class="footer-brand">
-                BürgerDirekt
-                <span>Ein Produkt von LeadCall24</span>
+        <div class="footer-inner">
+            <div>
+                <div class="footer-brand">
+                    <div class="nav-logo-icon" style="width:30px;height:30px;border-radius:6px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="16" height="16"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                    </div>
+                    <span class="footer-brand-text">BürgerDirekt</span>
+                </div>
+                <div class="footer-info">
+                    Tristan Haupt<br>
+                    Unter den Linden 9, 14542 Werder (Havel)<br>
+                    Tel: 0163 169 2010<br>
+                    info@buerger-direkt.de
+                </div>
             </div>
             <div class="footer-links">
                 <a href="impressum.html">Impressum</a>
@@ -1169,71 +1511,78 @@
             </div>
         </div>
         <div class="footer-bottom">
-            Tristan Haupt · Unter den Linden 9 · 14542 Werder (Havel)
+            © 2026 BürgerDirekt. Alle Rechte vorbehalten.
         </div>
     </div>
 </footer>
 
 <script>
-    // Nav shadow on scroll
-    window.addEventListener('scroll', function() {
-        document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 10);
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Nav scroll effect
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+    const nav = document.getElementById('nav');
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// FAQ toggle
+function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const answer = item.querySelector('.faq-answer');
+    const isOpen = item.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-answer').style.maxHeight = null;
     });
 
-    // Mobile menu toggle
-    document.getElementById('hamburger').addEventListener('click', function() {
-        document.getElementById('navLinks').classList.toggle('open');
-    });
+    if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+}
 
-    // Close mobile menu on link click
-    document.querySelectorAll('.nav-links a').forEach(function(a) {
-        a.addEventListener('click', function() {
-            document.getElementById('navLinks').classList.remove('open');
-        });
-    });
+// Form submission
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var data = {
+        anrede: this.anrede.value,
+        name: this.name.value,
+        kommune: this.kommune.value,
+        position: this.position.value,
+        email: this.email.value,
+        telefon: this.telefon.value,
+        nachricht: this.nachricht.value,
+        timestamp: new Date().toISOString()
+    };
+    console.log('BürgerDirekt Lead:', data);
+    this.style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+});
 
-    // FAQ accordion
-    document.querySelectorAll('.faq-q').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var item = this.parentElement;
-            var answer = item.querySelector('.faq-a');
-            var wasOpen = item.classList.contains('open');
-
-            // Close all items
-            document.querySelectorAll('.faq-item').forEach(function(el) {
-                el.classList.remove('open');
-                el.querySelector('.faq-a').style.maxHeight = null;
-            });
-
-            // Toggle clicked item
-            if (!wasOpen) {
-                item.classList.add('open');
-                answer.style.maxHeight = answer.scrollHeight + 'px';
-            }
-        });
-    });
-
-    // Contact form (client-side only for now)
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
         e.preventDefault();
-
-        var data = {
-            anrede: this.anrede.value,
-            name: this.name.value,
-            kommune: this.kommune.value,
-            position: this.position.value,
-            email: this.email.value,
-            telefon: this.telefon.value,
-            nachricht: this.nachricht.value,
-            timestamp: new Date().toISOString()
-        };
-
-        console.log('BürgerDirekt Lead:', data);
-
-        this.style.display = 'none';
-        document.getElementById('formSuccess').style.display = 'block';
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Close mobile menu
+            document.getElementById('nav').classList.remove('mobile-open');
+        }
     });
+});
 </script>
-
 </body>
 </html>
